@@ -31,14 +31,14 @@ class MainPageViewController: UIViewController {
         items = dataArray
     }
     
-    @IBAction func segmentSelected(_ sender: Any) {
-        switch segmentedSwitch.selectedSegmentIndex {
+    @IBAction func segmentSelected(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
         case 0:
             items = dataArray
             itemsTableView.reloadData()
         case 1:
             items = dataArray
-            items = items.filter{ $0.quantity != 0 }
+            items = items.filter { $0.quantity != 0 }
             itemsTableView.reloadData()
         case 2:
             items = dataArray
@@ -76,8 +76,6 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         itemIndex = indexPath.row
-        print("selected index \(indexPath.row)")
-        print(itemIndex)
         if itemIndex != nil {
             print(items[itemIndex!].name)
         } else {
