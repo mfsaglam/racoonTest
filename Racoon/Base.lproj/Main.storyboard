@@ -57,9 +57,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="60D-wC-8jT" kind="show" identifier="showEdit" id="eCv-mx-3tO"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -67,12 +64,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Count Items" id="5S6-eW-XZd">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="mFi-Ct-34Z">
-                            <connections>
-                                <segue destination="THh-pp-ayi" kind="show" identifier="showAdd" id="9QH-zi-xel"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="Count Items" largeTitleDisplayMode="always" id="5S6-eW-XZd">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="Yin-Wn-E3d"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="mFi-Ct-34Z"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="mFi-Ct-34Z" id="MkR-OX-clJ"/>
@@ -87,7 +81,7 @@
         <!--Item Name Will Come Here-->
         <scene sceneID="KdH-g5-c8Q">
             <objects>
-                <viewController id="60D-wC-8jT" customClass="CountItemViewController" customModule="Racoon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CountItemViewControllerID" id="60D-wC-8jT" customClass="CountItemViewController" customModule="Racoon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="beF-Gh-9ZU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -117,7 +111,7 @@
                         <viewLayoutGuide key="safeArea" id="qtV-Zr-KlF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Item Name Will Come Here" id="eqS-GJ-vcw">
+                    <navigationItem key="navigationItem" title="Item Name Will Come Here" largeTitleDisplayMode="always" id="eqS-GJ-vcw">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="owy-H9-x7k"/>
                     </navigationItem>
                     <connections>
@@ -135,7 +129,7 @@
             <objects>
                 <navigationController title="Racoon" automaticallyAdjustsScrollViewInsets="NO" id="DVG-vC-8vW" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="SAw-Gs-edU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" backIndicatorImage="chevron.left" catalog="system" largeTitles="YES" id="SAw-Gs-edU">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -151,7 +145,7 @@
         <!--Create New Item-->
         <scene sceneID="rIr-sl-CL2">
             <objects>
-                <viewController id="THh-pp-ayi" customClass="CreateItemViewController" customModule="Racoon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateItemViewControllerID" id="THh-pp-ayi" customClass="CreateItemViewController" customModule="Racoon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pI5-gd-Ndw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -206,6 +200,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.left" catalog="system" width="96" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

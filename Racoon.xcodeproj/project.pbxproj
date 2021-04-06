@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		073962B8931C51D9044BC072 /* Pods_Racoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FADB74A8A71051F76C9E147E /* Pods_Racoon.framework */; };
+		1232A2CE2619B28C00D98AD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1232A2CD2619B28C00D98AD9 /* GoogleService-Info.plist */; };
 		1260782A2613916600A63FD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126078292613916600A63FD0 /* AppDelegate.swift */; };
 		1260782C2613916600A63FD0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260782B2613916600A63FD0 /* SceneDelegate.swift */; };
 		1260782E2613916600A63FD0 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260782D2613916600A63FD0 /* MainPageViewController.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F59003ACDB95CA37B1A3384 /* Pods-Racoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.debug.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.debug.xcconfig"; sourceTree = "<group>"; };
+		1232A2CD2619B28C00D98AD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		126078262613916600A63FD0 /* Racoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Racoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		126078292613916600A63FD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1260782B2613916600A63FD0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +36,8 @@
 		1260784926139DEA00A63FD0 /* CountItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountItemViewController.swift; sourceTree = "<group>"; };
 		126078522613B54800A63FD0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		12F0C1EA2615107F00AEDB4D /* CreateItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemData.swift; sourceTree = "<group>"; };
+		5982B319F4438F7FF59D8F0D /* Pods-Racoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.release.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.release.xcconfig"; sourceTree = "<group>"; };
+		FADB74A8A71051F76C9E147E /* Pods_Racoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Racoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				073962B8931C51D9044BC072 /* Pods_Racoon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +57,8 @@
 			children = (
 				126078282613916600A63FD0 /* Racoon */,
 				126078272613916600A63FD0 /* Products */,
+				F997BAB82D5984909BC8D5BC /* Pods */,
+				A89E37F6B2E6B08FE257F644 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,19 +73,37 @@
 		126078282613916600A63FD0 /* Racoon */ = {
 			isa = PBXGroup;
 			children = (
+				1232A2CD2619B28C00D98AD9 /* GoogleService-Info.plist */,
 				126078292613916600A63FD0 /* AppDelegate.swift */,
 				1260782B2613916600A63FD0 /* SceneDelegate.swift */,
-				1260782D2613916600A63FD0 /* MainPageViewController.swift */,
-				126078522613B54800A63FD0 /* Item.swift */,
 				1260782F2613916600A63FD0 /* Main.storyboard */,
+				1260782D2613916600A63FD0 /* MainPageViewController.swift */,
 				1260784926139DEA00A63FD0 /* CountItemViewController.swift */,
 				1260784626139DD300A63FD0 /* CreateItemViewController.swift */,
+				126078522613B54800A63FD0 /* Item.swift */,
 				12F0C1EA2615107F00AEDB4D /* CreateItemData.swift */,
 				126078322613916700A63FD0 /* Assets.xcassets */,
 				126078342613916700A63FD0 /* LaunchScreen.storyboard */,
 				126078372613916700A63FD0 /* Info.plist */,
 			);
 			path = Racoon;
+			sourceTree = "<group>";
+		};
+		A89E37F6B2E6B08FE257F644 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FADB74A8A71051F76C9E147E /* Pods_Racoon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F997BAB82D5984909BC8D5BC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0F59003ACDB95CA37B1A3384 /* Pods-Racoon.debug.xcconfig */,
+				5982B319F4438F7FF59D8F0D /* Pods-Racoon.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +113,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1260783A2613916700A63FD0 /* Build configuration list for PBXNativeTarget "Racoon" */;
 			buildPhases = (
+				6FAF4A5539F47DA714EF74AB /* [CP] Check Pods Manifest.lock */,
 				126078222613916600A63FD0 /* Sources */,
 				126078232613916600A63FD0 /* Frameworks */,
 				126078242613916600A63FD0 /* Resources */,
@@ -137,12 +165,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				126078362613916700A63FD0 /* LaunchScreen.storyboard in Resources */,
+				1232A2CE2619B28C00D98AD9 /* GoogleService-Info.plist in Resources */,
 				126078332613916700A63FD0 /* Assets.xcassets in Resources */,
 				126078312613916600A63FD0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6FAF4A5539F47DA714EF74AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Racoon-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		126078222613916600A63FD0 /* Sources */ = {
@@ -299,16 +353,19 @@
 		};
 		1260783B2613916700A63FD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0F59003ACDB95CA37B1A3384 /* Pods-Racoon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RPQ3VF2JBZ;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = Racoon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mfsaglam.Racoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -318,16 +375,20 @@
 		};
 		1260783C2613916700A63FD0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5982B319F4438F7FF59D8F0D /* Pods-Racoon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RPQ3VF2JBZ;
+				EXCLUDED_ARCHS = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Racoon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mfsaglam.Racoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

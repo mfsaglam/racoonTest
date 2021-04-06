@@ -9,8 +9,6 @@ import UIKit
 
 class MainPageViewController: UIViewController {
     
-    var itemIndex: Int?
-    
     var dataArray: [Item] = [
         Item(name: "Bacon Kg", quantity: 100),
         Item(name: "Fish Can 250g", quantity: 50),
@@ -29,6 +27,7 @@ class MainPageViewController: UIViewController {
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         items = dataArray
+        navigationItem.largeTitleDisplayMode = .always
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
@@ -49,17 +48,7 @@ class MainPageViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEdit" {
-            if let destinationVC = segue.destination as? CountItemViewController {
-                if itemIndex != nil {
-                    destinationVC.selectedItem = items[itemIndex!]
-                } else {
-                    print("itemindex is nil")
-                }
-            }
-        }
-    }
+    
 }
 
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
@@ -75,12 +64,15 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        itemIndex = indexPath.row
-        if itemIndex != nil {
-            print(items[itemIndex!].name)
-        } else {
-            print("itemindex is nil")
+        let item = items[indexPath.row]
+        guard let countItemVC = self.storyboard?.instantiateViewController(identifier: "CountItemViewControllerID", creator: { coder in
+            return CountItemViewController(coder: coder, selectedItem: item)
+        }) else {
+            fatalError("CountItemViewController not found")
         }
+        
+        self.navigationController?.pushViewController(countItemVC, animated: true)
     }
 }
+
 
