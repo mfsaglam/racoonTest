@@ -48,7 +48,6 @@ class MainPageViewController: UIViewController {
         }
     }
     
-    
 }
 
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
@@ -72,6 +71,14 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         self.navigationController?.pushViewController(countItemVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "") { (action, view, nil) in
+            print("Delete")
+        }
+        delete.image = UIImage(systemName: "xmark")
+        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
 

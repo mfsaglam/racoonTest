@@ -12,13 +12,13 @@ class CountItemViewController: UIViewController {
     var selectedItem: Item
     
     init?(coder: NSCoder, selectedItem: Item) {
-           self.selectedItem = selectedItem
-           super.init(coder: coder)
-       }
-
-       required init?(coder: NSCoder) {
-           fatalError("You must create this view controller with an item.")
-       }
+        self.selectedItem = selectedItem
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("You must create this view controller with an item.")
+    }
 
 
     @IBOutlet weak var addButton: UIBarButtonItem!
