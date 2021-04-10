@@ -24,7 +24,11 @@ class CreateItemViewController: UIViewController {
         createItemTableView.dataSource = self
     }
     
-
+    @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
+        print("saved")
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 

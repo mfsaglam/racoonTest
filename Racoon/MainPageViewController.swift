@@ -18,6 +18,7 @@ class MainPageViewController: UIViewController {
     
     var items: [Item] = []
     
+    let searchBar = UISearchBar(frame: CGRect.zero)
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var itemsTableView: UITableView!
     @IBOutlet weak var segmentedSwitch: UISegmentedControl!
@@ -26,8 +27,17 @@ class MainPageViewController: UIViewController {
         super.viewDidLoad()
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
+        searchBar.delegate = self
         items = dataArray
         navigationItem.largeTitleDisplayMode = .always
+        configureSearchBar()
+    }
+    
+    func configureSearchBar() {
+        searchBar.placeholder = "Search"
+        navigationItem.titleView = searchBar
+        searchBar.isHidden = true
+        searchBar.showsCancelButton = true
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
@@ -48,8 +58,19 @@ class MainPageViewController: UIViewController {
         }
     }
     
+    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+        searchBar.isHidden.toggle()
+        if searchBar.isHidden == true {
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+        } else {
+            searchBar.becomeFirstResponder()
+        }
+    }
+    
 }
 
+//Mark: - UITableView Delegate and DataSource
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -79,6 +100,28 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
         delete.image = UIImage(systemName: "xmark")
         return UISwipeActionsConfiguration(actions: [delete])
+    }
+}
+
+//Mark: - UISearchBar Delegate
+extension MainPageViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        items = dataArray
+        itemsTableView.reloadData()
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        segmentedSwitch.selectedSegmentIndex = 0
+        itemsTableView.reloadData()
+        if searchBar.text?.count == 0 {
+            items = dataArray
+            itemsTableView.reloadData()
+        } else {
+            items = items.filter { $0.name.contains(searchText) }
+            itemsTableView.reloadData()
+        }
     }
 }
 

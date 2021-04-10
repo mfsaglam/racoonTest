@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DVG-vC-8vW">
-    <device id="retina5_9" orientation="portrait" appearance="dark"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -65,7 +65,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Count Items" largeTitleDisplayMode="always" id="5S6-eW-XZd">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="Yin-Wn-E3d"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="Yin-Wn-E3d">
+                            <connections>
+                                <action selector="searchButtonPressed:" destination="BYZ-38-t0r" id="qyO-ZC-WOL"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mFi-Ct-34Z">
                             <connections>
                                 <action selector="addButtonClicked:" destination="BYZ-38-t0r" id="91X-ea-iLg"/>
@@ -111,6 +115,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButtonClicked:" destination="60D-wC-8jT" eventType="touchUpInside" id="VNM-Yi-UB9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qtV-Zr-KlF"/>
@@ -191,7 +198,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create New Item" largeTitleDisplayMode="always" id="2U4-rL-BW5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="qUU-Ah-X8H"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="qUU-Ah-X8H">
+                            <connections>
+                                <action selector="saveButtonClicked:" destination="THh-pp-ayi" id="AAI-zo-N5v"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="createItemTableView" destination="ktd-Ts-2iK" id="ZTi-nC-VD7"/>

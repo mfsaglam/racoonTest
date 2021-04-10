@@ -35,7 +35,11 @@ class CountItemViewController: UIViewController {
         self.title = selectedItem.name
     }
     
-
+    @IBAction func saveButtonClicked(_ sender: UIButton) {
+        print("saved Item \(selectedItem)")
+        navigationController?.popViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
