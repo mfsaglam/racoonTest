@@ -10,10 +10,10 @@ import UIKit
 class MainPageViewController: UIViewController {
     
     var dataArray: [Item] = [
-        Item(name: "Bacon Kg", quantity: 100),
-        Item(name: "Fish Can 250g", quantity: 50),
-        Item(name: "Patty pcs", quantity: 100),
-        Item(name: "Not Counted Item", quantity: 0)
+        Item(name: "Bacon Kg", quantity: 100, unit: .kg),
+        Item(name: "Fish Can 250g", quantity: 50, unit: .piece),
+        Item(name: "Patty pcs", quantity: 100, unit: .piece),
+        Item(name: "Not Counted Item", quantity: 0, unit: .kg)
     ]
     
     var items: [Item] = []
@@ -68,6 +68,8 @@ class MainPageViewController: UIViewController {
         }
     }
     
+    
+    
 }
 
 //Mark: - UITableView Delegate and DataSource
@@ -95,7 +97,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "") { (action, view, nil) in
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
             print("Delete")
         }
         delete.image = UIImage(systemName: "xmark")
@@ -114,12 +116,13 @@ extension MainPageViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         segmentedSwitch.selectedSegmentIndex = 0
+        items = dataArray
         itemsTableView.reloadData()
         if searchBar.text?.count == 0 {
-            items = dataArray
             itemsTableView.reloadData()
         } else {
-            items = items.filter { $0.name.contains(searchText) }
+            let searchString = searchText.capitalized
+            items = items.filter { $0.name.contains(searchString) }
             itemsTableView.reloadData()
         }
     }

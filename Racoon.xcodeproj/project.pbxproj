@@ -15,10 +15,10 @@
 		126078312613916600A63FD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1260782F2613916600A63FD0 /* Main.storyboard */; };
 		126078332613916700A63FD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 126078322613916700A63FD0 /* Assets.xcassets */; };
 		126078362613916700A63FD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 126078342613916700A63FD0 /* LaunchScreen.storyboard */; };
-		1260784726139DD300A63FD0 /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260784626139DD300A63FD0 /* CreateItemViewController.swift */; };
 		1260784A26139DEA00A63FD0 /* CountItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260784926139DEA00A63FD0 /* CountItemViewController.swift */; };
 		126078532613B54900A63FD0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126078522613B54800A63FD0 /* Item.swift */; };
 		12F0C1EB2615107F00AEDB4D /* CreateItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F0C1EA2615107F00AEDB4D /* CreateItemData.swift */; };
+		12F2002E26231DFC00A4EAC7 /* CreateItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,10 +32,10 @@
 		126078322613916700A63FD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		126078352613916700A63FD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		126078372613916700A63FD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1260784626139DD300A63FD0 /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
 		1260784926139DEA00A63FD0 /* CountItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountItemViewController.swift; sourceTree = "<group>"; };
 		126078522613B54800A63FD0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		12F0C1EA2615107F00AEDB4D /* CreateItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemData.swift; sourceTree = "<group>"; };
+		12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemTableViewController.swift; sourceTree = "<group>"; };
 		5982B319F4438F7FF59D8F0D /* Pods-Racoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.release.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.release.xcconfig"; sourceTree = "<group>"; };
 		FADB74A8A71051F76C9E147E /* Pods_Racoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Racoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -78,8 +78,8 @@
 				1260782B2613916600A63FD0 /* SceneDelegate.swift */,
 				1260782F2613916600A63FD0 /* Main.storyboard */,
 				1260782D2613916600A63FD0 /* MainPageViewController.swift */,
+				12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */,
 				1260784926139DEA00A63FD0 /* CountItemViewController.swift */,
-				1260784626139DD300A63FD0 /* CreateItemViewController.swift */,
 				126078522613B54800A63FD0 /* Item.swift */,
 				12F0C1EA2615107F00AEDB4D /* CreateItemData.swift */,
 				126078322613916700A63FD0 /* Assets.xcassets */,
@@ -203,13 +203,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12F2002E26231DFC00A4EAC7 /* CreateItemTableViewController.swift in Sources */,
 				1260782E2613916600A63FD0 /* MainPageViewController.swift in Sources */,
 				1260782A2613916600A63FD0 /* AppDelegate.swift in Sources */,
 				1260784A26139DEA00A63FD0 /* CountItemViewController.swift in Sources */,
 				1260782C2613916600A63FD0 /* SceneDelegate.swift in Sources */,
 				126078532613B54900A63FD0 /* Item.swift in Sources */,
 				12F0C1EB2615107F00AEDB4D /* CreateItemData.swift in Sources */,
-				1260784726139DD300A63FD0 /* CreateItemViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
