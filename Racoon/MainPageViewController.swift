@@ -17,6 +17,7 @@ class MainPageViewController: UIViewController {
     ]
     
     var items: [Item] = []
+    let createItemVc = CreateItemTableViewController()
     
     let searchBar = UISearchBar(frame: CGRect.zero)
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -29,8 +30,13 @@ class MainPageViewController: UIViewController {
         itemsTableView.dataSource = self
         searchBar.delegate = self
         items = dataArray
-        navigationItem.largeTitleDisplayMode = .always
         configureSearchBar()
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
+        view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func dismissKeyboard() {
+        searchBar.resignFirstResponder()
     }
     
     func configureSearchBar() {
@@ -68,8 +74,9 @@ class MainPageViewController: UIViewController {
         }
     }
     
-    
-    
+    @IBAction func addButtonPressed(_ sender: Any) {
+        //let vc = CreateItemTableViewController()
+    }
 }
 
 //Mark: - UITableView Delegate and DataSource

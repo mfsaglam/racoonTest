@@ -35,7 +35,7 @@ class CreateItemTableViewController: UITableViewController {
             return
         }
         var unit: ItemUnit {
-            unitSegment.selectedSegmentIndex == 0 ? .kg : .piece
+            return unitSegment.selectedSegmentIndex == 0 ? .piece : .kg
         }
         let item = Item(name: itemName, quantity: packQuantity, unit: unit)
         print(item)

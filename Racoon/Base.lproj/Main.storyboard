@@ -72,7 +72,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mFi-Ct-34Z">
                             <connections>
-                                <action selector="addButtonClicked:" destination="BYZ-38-t0r" id="91X-ea-iLg"/>
+                                <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="5TU-uB-39r"/>
                                 <segue destination="RF9-Je-GYg" kind="show" id="cew-wK-yY9"/>
                             </connections>
                         </barButtonItem>
