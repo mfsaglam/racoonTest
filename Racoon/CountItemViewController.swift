@@ -20,7 +20,6 @@ class CountItemViewController: UIViewController {
         fatalError("You must create this view controller with an item.")
     }
 
-
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var detailtemTableView: UITableView!
     @IBOutlet weak var saveButton: UIButton!

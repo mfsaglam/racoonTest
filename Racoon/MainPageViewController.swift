@@ -33,6 +33,7 @@ class MainPageViewController: UIViewController {
         configureSearchBar()
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
         view.addGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer.cancelsTouchesInView = false
     }
     
     @objc func dismissKeyboard() {
@@ -88,7 +89,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
         cell.textLabel?.text = items[indexPath.row].name
-        cell.detailTextLabel?.text = "\(items[indexPath.row].quantity)"
+        cell.detailTextLabel?.text = "\(items[indexPath.row].quantity) \(items[indexPath.row].unit)"
         return cell
     }
     
