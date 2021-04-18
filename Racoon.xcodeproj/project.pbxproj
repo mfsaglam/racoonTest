@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		073962B8931C51D9044BC072 /* Pods_Racoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FADB74A8A71051F76C9E147E /* Pods_Racoon.framework */; };
+		122A3DE1262AF82600F55D7D /* CreateItemDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3DE0262AF82600F55D7D /* CreateItemDelegate.swift */; };
 		1232A2CE2619B28C00D98AD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1232A2CD2619B28C00D98AD9 /* GoogleService-Info.plist */; };
 		1260782A2613916600A63FD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126078292613916600A63FD0 /* AppDelegate.swift */; };
 		1260782C2613916600A63FD0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260782B2613916600A63FD0 /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		0F59003ACDB95CA37B1A3384 /* Pods-Racoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.debug.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.debug.xcconfig"; sourceTree = "<group>"; };
+		122A3DE0262AF82600F55D7D /* CreateItemDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemDelegate.swift; sourceTree = "<group>"; };
 		1232A2CD2619B28C00D98AD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		126078262613916600A63FD0 /* Racoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Racoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		126078292613916600A63FD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +54,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		122A3DDC262AF7DD00F55D7D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1260782F2613916600A63FD0 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		122A3DDD262AF7EC00F55D7D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1260782D2613916600A63FD0 /* MainPageViewController.swift */,
+				1260784926139DEA00A63FD0 /* CountItemViewController.swift */,
+				12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		122A3DDF262AF7F900F55D7D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				12F0C1EA2615107F00AEDB4D /* CreateItemData.swift */,
+				122A3DE0262AF82600F55D7D /* CreateItemDelegate.swift */,
+				126078522613B54800A63FD0 /* Item.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1260781D2613916600A63FD0 = {
 			isa = PBXGroup;
 			children = (
@@ -76,12 +106,9 @@
 				1232A2CD2619B28C00D98AD9 /* GoogleService-Info.plist */,
 				126078292613916600A63FD0 /* AppDelegate.swift */,
 				1260782B2613916600A63FD0 /* SceneDelegate.swift */,
-				1260782F2613916600A63FD0 /* Main.storyboard */,
-				1260782D2613916600A63FD0 /* MainPageViewController.swift */,
-				1260784926139DEA00A63FD0 /* CountItemViewController.swift */,
-				12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */,
-				126078522613B54800A63FD0 /* Item.swift */,
-				12F0C1EA2615107F00AEDB4D /* CreateItemData.swift */,
+				122A3DDC262AF7DD00F55D7D /* View */,
+				122A3DDD262AF7EC00F55D7D /* Controller */,
+				122A3DDF262AF7F900F55D7D /* Model */,
 				126078322613916700A63FD0 /* Assets.xcassets */,
 				126078342613916700A63FD0 /* LaunchScreen.storyboard */,
 				126078372613916700A63FD0 /* Info.plist */,
@@ -204,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12F2002E26231DFC00A4EAC7 /* CreateItemTableViewController.swift in Sources */,
+				122A3DE1262AF82600F55D7D /* CreateItemDelegate.swift in Sources */,
 				1260782E2613916600A63FD0 /* MainPageViewController.swift in Sources */,
 				1260782A2613916600A63FD0 /* AppDelegate.swift in Sources */,
 				1260784A26139DEA00A63FD0 /* CountItemViewController.swift in Sources */,

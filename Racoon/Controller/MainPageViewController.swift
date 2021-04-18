@@ -17,7 +17,6 @@ class MainPageViewController: UIViewController {
     ]
     
     var items: [Item] = []
-    let createItemVc = CreateItemTableViewController()
     
     let searchBar = UISearchBar(frame: CGRect.zero)
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -34,10 +33,23 @@ class MainPageViewController: UIViewController {
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
         view.addGestureRecognizer(tapGestureRecognizer)
         tapGestureRecognizer.cancelsTouchesInView = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItem))
     }
+    
+    // MARK: - Selectors
     
     @objc func dismissKeyboard() {
         searchBar.resignFirstResponder()
+    }
+    
+    @objc func handleAddItem() {
+        guard let createItemVC = self.storyboard?.instantiateViewController(identifier: "CreateItemTableViewControllerID", creator: { coder in
+            return CreateItemTableViewController(coder: coder)
+        }) else {
+            fatalError("CreateItemTableViewController not found")
+        }
+        
+        self.navigationController?.pushViewController(createItemVC, animated: true)
     }
     
     func configureSearchBar() {
@@ -74,13 +86,9 @@ class MainPageViewController: UIViewController {
             searchBar.becomeFirstResponder()
         }
     }
-    
-    @IBAction func addButtonPressed(_ sender: Any) {
-        //let vc = CreateItemTableViewController()
-    }
 }
 
-//Mark: - UITableView Delegate and DataSource
+//MARK: - UITableView Delegate and DataSource
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -113,7 +121,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//Mark: - UISearchBar Delegate
+//MARK: - UISearchBar Delegate
 extension MainPageViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
@@ -133,6 +141,16 @@ extension MainPageViewController: UISearchBarDelegate {
             items = items.filter { $0.name.contains(searchString) }
             itemsTableView.reloadData()
         }
+    }
+}
+
+//MARK: - CreateItemDelegate
+extension MainPageViewController: CreateItemDelegate {
+    func updateViewWithNewItem(item: Item) {
+        dataArray.append(item)
+        items = dataArray
+        print(items)
+        itemsTableView.reloadData()
     }
 }
 

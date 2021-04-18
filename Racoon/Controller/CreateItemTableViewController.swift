@@ -14,43 +14,26 @@ class CreateItemTableViewController: UITableViewController {
     @IBOutlet weak var unitSegment: UISegmentedControl!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
-    var addItem: ((Item) -> Void)?
-    
+    var delegate: CreateItemDelegate?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationController?.navigationBar.prefersLargeTitles = true
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        nameTextField?.becomeFirstResponder()
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         guard let itemName = nameTextField.text,
               let packQuantity = Int(quantityTextField.text!) else {
-            //handle error
+            //handle error, show an alert
             return
         }
         var unit: ItemUnit {
             return unitSegment.selectedSegmentIndex == 0 ? .piece : .kg
         }
         let item = Item(name: itemName, quantity: packQuantity, unit: unit)
-        print(item)
-        addItem?(item)
+        print("\(item) is succesfully created")
+        delegate?.updateViewWithNewItem(item: item)
+        navigationController?.popViewController(animated: true)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

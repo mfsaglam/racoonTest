@@ -70,15 +70,8 @@
                                 <action selector="searchButtonPressed:" destination="BYZ-38-t0r" id="qyO-ZC-WOL"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="mFi-Ct-34Z">
-                            <connections>
-                                <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="5TU-uB-39r"/>
-                                <segue destination="RF9-Je-GYg" kind="show" id="cew-wK-yY9"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addButton" destination="mFi-Ct-34Z" id="MkR-OX-clJ"/>
                         <outlet property="itemsTableView" destination="haF-GR-MWD" id="ln0-Yf-XGU"/>
                         <outlet property="segmentedSwitch" destination="gMg-9l-Qse" id="IcD-bx-nV4"/>
                     </connections>
@@ -158,8 +151,7 @@
         <!--Create New Item-->
         <scene sceneID="QuP-bk-kS1">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="o4O-gx-ddi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tableViewController id="RF9-Je-GYg" customClass="CreateItemTableViewController" customModule="Racoon" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CreateItemTableViewControllerID" id="RF9-Je-GYg" customClass="CreateItemTableViewController" customModule="Racoon" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TZh-Qn-8a0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -182,7 +174,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Item Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhW-V7-Gfb">
-                                                    <rect key="frame" x="184" y="2" width="174" height="34"/>
+                                                    <rect key="frame" x="181" y="6" width="175" height="36"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
@@ -205,7 +197,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="t7p-oW-itO">
-                                                    <rect key="frame" x="184" y="4" width="174" height="33"/>
+                                                    <rect key="frame" x="181" y="3" width="175" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <segments>
                                                         <segment title="Piece"/>
@@ -230,7 +222,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter quantity" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LvN-um-pFL">
-                                                    <rect key="frame" x="184" y="2" width="174" height="34"/>
+                                                    <rect key="frame" x="181" y="8" width="175" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -261,6 +253,7 @@
                         <outlet property="unitSegment" destination="t7p-oW-itO" id="kFI-fd-8mf"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o4O-gx-ddi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2100" y="-239.73013493253376"/>
         </scene>
