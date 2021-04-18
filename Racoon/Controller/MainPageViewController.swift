@@ -91,7 +91,7 @@ class MainPageViewController: UIViewController {
 //MARK: - UITableView Delegate and DataSource
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return dataArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -113,8 +113,10 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            print("Delete")
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
+            self.dataArray.remove(at: indexPath.row)
+            self.items = self.dataArray
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         delete.image = UIImage(systemName: "xmark")
         return UISwipeActionsConfiguration(actions: [delete])
