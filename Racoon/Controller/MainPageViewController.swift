@@ -48,7 +48,7 @@ class MainPageViewController: UIViewController {
         }) else {
             fatalError("CreateItemTableViewController not found")
         }
-        
+        createItemVC.delegate = self
         self.navigationController?.pushViewController(createItemVC, animated: true)
     }
     
@@ -147,10 +147,11 @@ extension MainPageViewController: UISearchBarDelegate {
 //MARK: - CreateItemDelegate
 extension MainPageViewController: CreateItemDelegate {
     func updateViewWithNewItem(item: Item) {
-        dataArray.append(item)
-        items = dataArray
-        print(items)
-        itemsTableView.reloadData()
+        self.dismiss(animated: true) {
+            self.dataArray.append(item)
+            self.items = self.dataArray
+            self.itemsTableView.reloadData()
+        }
     }
 }
 
