@@ -124,6 +124,9 @@
                                 <state key="normal" title="Edit Item">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="editButtonClicled:" destination="60D-wC-8jT" eventType="touchUpInside" id="hcL-xV-Dkh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qtV-Zr-KlF"/>

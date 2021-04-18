@@ -42,6 +42,11 @@ class CountItemViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func editButtonClicled(_ sender: UIButton) {
+        //go to edit page or pop up editing options
+    }
+    
+    
     /*
     // MARK: - Navigation
 
