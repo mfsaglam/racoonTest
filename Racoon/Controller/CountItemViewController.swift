@@ -23,10 +23,13 @@ class CountItemViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var detailtemTableView: UITableView!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         saveButton.layer.cornerRadius = saveButton.frame.size.height / 2
+        editButton.layer.cornerRadius = editButton.frame.size.height / 2
     }
     
     override func viewWillAppear(_ animated: Bool) {
