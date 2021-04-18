@@ -38,7 +38,7 @@ class CreateItemTableViewController: UITableViewController {
             return unitSegment.selectedSegmentIndex == 0 ? .piece : .kg
         }
         
-        let item = Item(name: itemName, quantity: packQuantity, unit: unit)
+        let item = Item(name: itemName, packageQuantity: packQuantity, unit: unit)
         print("\(item) is succesfully created")
         delegate?.updateViewWithNewItem(item: item)
         navigationController?.popViewController(animated: true)

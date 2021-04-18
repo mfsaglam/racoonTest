@@ -23,13 +23,11 @@ class CountItemViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var detailtemTableView: UITableView!
     @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         saveButton.layer.cornerRadius = saveButton.frame.size.height / 2
-        editButton.layer.cornerRadius = editButton.frame.size.height / 2
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +38,6 @@ class CountItemViewController: UIViewController {
     @IBAction func saveButtonClicked(_ sender: UIButton) {
         print("saved Item \(selectedItem)")
         navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func editButtonClicled(_ sender: UIButton) {
-        //go to edit page or pop up editing options
     }
     
     

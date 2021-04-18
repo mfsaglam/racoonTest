@@ -9,11 +9,17 @@ import Foundation
 
 struct Item {
     var name: String
-    var quantity: Int
+    var packageQuantity: Int
     var unit: ItemUnit
+    var quantity: Int = 0
 }
 
 enum ItemUnit {
     case kg
+    case piece
+}
+
+enum quantityType {
+    case package
     case piece
 }

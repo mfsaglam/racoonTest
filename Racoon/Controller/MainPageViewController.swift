@@ -10,13 +10,19 @@ import UIKit
 class MainPageViewController: UIViewController {
     
     var dataArray: [Item] = [
-        Item(name: "Bacon Kg", quantity: 100, unit: .kg),
-        Item(name: "Fish Can 250g", quantity: 50, unit: .piece),
-        Item(name: "Patty pcs", quantity: 100, unit: .piece),
-        Item(name: "Not Counted Item", quantity: 0, unit: .kg)
+        Item(name: "Bacon Kg", packageQuantity: 100, unit: .kg),
+        Item(name: "Fish Can 250g", packageQuantity: 50, unit: .piece),
+        Item(name: "Patty pcs", packageQuantity: 100, unit: .piece),
+        Item(name: "Not Counted Item", packageQuantity: 0, unit: .kg)
     ]
     
-    var items: [Item] = []
+    var items: [Item] {
+        get {
+            return dataArray
+        } set {
+            //what will happen when people set the array??
+        }
+    }
     
     let searchBar = UISearchBar(frame: CGRect.zero)
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -28,7 +34,6 @@ class MainPageViewController: UIViewController {
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         searchBar.delegate = self
-        items = dataArray
         configureSearchBar()
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
         view.addGestureRecognizer(tapGestureRecognizer)
@@ -62,15 +67,12 @@ class MainPageViewController: UIViewController {
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            items = dataArray
             itemsTableView.reloadData()
         case 1:
-            items = dataArray
-            items = items.filter { $0.quantity != 0 }
+            items = items.filter { $0.packageQuantity != 0 }
             itemsTableView.reloadData()
         case 2:
-            items = dataArray
-            items = items.filter { $0.quantity == 0 }
+            items = items.filter { $0.packageQuantity == 0 }
             itemsTableView.reloadData()
         default:
             break
@@ -96,8 +98,8 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
-        cell.textLabel?.text = items[indexPath.row].name
-        cell.detailTextLabel?.text = "\(items[indexPath.row].quantity) \(items[indexPath.row].unit)"
+        cell.textLabel?.text = dataArray[indexPath.row].name
+        cell.detailTextLabel?.text = "\(items[indexPath.row].packageQuantity) \(items[indexPath.row].unit)"
         return cell
     }
     
@@ -115,11 +117,16 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
             self.dataArray.remove(at: indexPath.row)
-            self.items = self.dataArray
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+        
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+            print("Edit")
+        }
         delete.image = UIImage(systemName: "xmark")
-        return UISwipeActionsConfiguration(actions: [delete])
+        edit.image = UIImage(systemName: "square.and.pencil")
+        edit.backgroundColor = .purple
+        return UISwipeActionsConfiguration(actions: [delete, edit])
     }
 }
 
@@ -127,20 +134,18 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainPageViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        items = dataArray
         itemsTableView.reloadData()
         searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         segmentedSwitch.selectedSegmentIndex = 0
-        items = dataArray
         itemsTableView.reloadData()
         if searchBar.text?.count == 0 {
             itemsTableView.reloadData()
         } else {
             let searchString = searchText.capitalized
-            items = items.filter { $0.name.contains(searchString) }
+            dataArray = dataArray.filter { $0.name.contains(searchString) }
             itemsTableView.reloadData()
         }
     }
@@ -151,7 +156,6 @@ extension MainPageViewController: CreateItemDelegate {
     func updateViewWithNewItem(item: Item) {
         self.dismiss(animated: true) {
             self.dataArray.append(item)
-            self.items = self.dataArray
             self.itemsTableView.reloadData()
         }
     }
