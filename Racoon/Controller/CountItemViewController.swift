@@ -27,6 +27,9 @@ class CountItemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        detailtemTableView.delegate = self
+        detailtemTableView.dataSource = self
+        detailtemTableView.register(CountItemCell.self, forCellReuseIdentifier: "CountItemCell")
         saveButton.layer.cornerRadius = saveButton.frame.size.height / 2
     }
     
@@ -35,7 +38,13 @@ class CountItemViewController: UIViewController {
         self.title = selectedItem.name
     }
     
-    @IBAction func saveButtonClicked(_ sender: UIButton) {
+    @IBAction func addButtonPressed(_ sender: Any) {
+        selectedItem.inventory.append(0)
+        detailtemTableView.reloadData()
+    }
+    
+    
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
         print("saved Item \(selectedItem)")
         navigationController?.popViewController(animated: true)
     }
@@ -51,7 +60,7 @@ extension CountItemViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "countItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CountItemCell", for: indexPath)
         return cell
     }
 }

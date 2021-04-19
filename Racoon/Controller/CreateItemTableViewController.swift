@@ -19,8 +19,12 @@ class CreateItemTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        nameTextField?.becomeFirstResponder()
-        navigationItem.backButtonTitle = ""
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        nameTextField.becomeFirstResponder()
+        navigationItem.backButtonTitle = " "
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
@@ -41,5 +45,6 @@ class CreateItemTableViewController: UITableViewController {
         let item = Item(name: itemName, packageQuantity: packQuantity, unit: unit)
         print("\(item) is succesfully created")
         delegate?.updateViewWithNewItem(item: item)
+        navigationController?.popViewController(animated: true)
     }
 }
