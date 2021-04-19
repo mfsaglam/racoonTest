@@ -11,7 +11,10 @@ struct Item {
     var name: String
     var packageQuantity: Int
     var unit: ItemUnit
-    var quantity: Int = 0
+    var totalInventory: Int {
+        return inventory.reduce(0, +)
+    }
+    var inventory: [Int] = []
 }
 
 enum ItemUnit {

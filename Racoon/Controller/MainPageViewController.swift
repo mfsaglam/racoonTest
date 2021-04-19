@@ -69,10 +69,10 @@ class MainPageViewController: UIViewController {
         case 0:
             itemsTableView.reloadData()
         case 1:
-            items = items.filter { $0.packageQuantity != 0 }
+            items = items.filter { $0.totalInventory != 0 }
             itemsTableView.reloadData()
         case 2:
-            items = items.filter { $0.packageQuantity == 0 }
+            items = items.filter { $0.totalInventory == 0 }
             itemsTableView.reloadData()
         default:
             break
@@ -91,6 +91,7 @@ class MainPageViewController: UIViewController {
 }
 
 //MARK: - UITableView Delegate and DataSource
+
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataArray.count
@@ -99,7 +100,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
         cell.textLabel?.text = dataArray[indexPath.row].name
-        cell.detailTextLabel?.text = "\(items[indexPath.row].packageQuantity) \(items[indexPath.row].unit)"
+        cell.detailTextLabel?.text = "\(items[indexPath.row].totalInventory) \(items[indexPath.row].unit)"
         return cell
     }
     

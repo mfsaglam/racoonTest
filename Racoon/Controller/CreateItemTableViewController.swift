@@ -41,6 +41,5 @@ class CreateItemTableViewController: UITableViewController {
         let item = Item(name: itemName, packageQuantity: packQuantity, unit: unit)
         print("\(item) is succesfully created")
         delegate?.updateViewWithNewItem(item: item)
-        navigationController?.popViewController(animated: true)
     }
 }
