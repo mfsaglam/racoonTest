@@ -22,7 +22,12 @@ enum ItemUnit {
     case piece
 }
 
-enum quantityType {
+enum QuantityType {
     case package
     case piece
+}
+
+struct Inventory {
+    var amount: Int
+    var type: QuantityType
 }
