@@ -14,7 +14,7 @@ struct Item {
     var totalInventory: Int {
         return inventory.reduce(0, +)
     }
-    var inventory: [Int] = []
+    var inventory: [Int] = [0]
 }
 
 enum ItemUnit {

@@ -18,9 +18,16 @@ class MainPageViewController: UIViewController {
     
     var items: [Item] {
         get {
-            return dataArray
-        } set {
-            //what will happen when people set the array??
+            switch segmentedSwitch.selectedSegmentIndex {
+            case 0:
+                return dataArray
+            case 1:
+                return dataArray.filter { $0.totalInventory != 0 }
+            case 2:
+                return dataArray.filter { $0.totalInventory == 0 }
+            default:
+                return dataArray
+            }
         }
     }
     
@@ -65,18 +72,7 @@ class MainPageViewController: UIViewController {
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            itemsTableView.reloadData()
-        case 1:
-            items = items.filter { $0.totalInventory != 0 }
-            itemsTableView.reloadData()
-        case 2:
-            items = items.filter { $0.totalInventory == 0 }
-            itemsTableView.reloadData()
-        default:
-            break
-        }
+        itemsTableView.reloadData()
     }
     
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
@@ -94,7 +90,7 @@ class MainPageViewController: UIViewController {
 
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataArray.count
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
