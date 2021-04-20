@@ -63,7 +63,8 @@ extension CountItemViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InventoryCell", for: indexPath)
-        cell.textLabel?.text = "23"
+        cell.textLabel?.text = "\(selectedItem.inventory[indexPath.row])"
+        cell.detailTextLabel?.text = "kg"
         return cell
     }
 }
