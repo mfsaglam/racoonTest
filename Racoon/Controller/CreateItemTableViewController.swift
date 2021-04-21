@@ -38,7 +38,7 @@ class CreateItemTableViewController: UITableViewController {
             return
         }
         
-        var unit: ItemUnit {
+        var unit: Item.ItemUnit {
             return unitSegment.selectedSegmentIndex == 0 ? .piece : .kg
         }
         

@@ -51,8 +51,8 @@ class CountItemViewController: UIViewController {
 
 extension CountItemViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let inventoryUnit = selectedItem.inventory[indexPath.row]
-        print("inventoryUnit \(inventoryUnit) editing")
+        let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! InventoryController
+        self.showDetailViewController(inventoryVC, sender: self)
     }
 }
 
