@@ -14,14 +14,9 @@ class InventoryController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
         self.navigationItem.rightBarButtonItem = saveButton
-    }
+    }        
     
     //MARK: - Selectors
     @objc func saveButtonTapped() {

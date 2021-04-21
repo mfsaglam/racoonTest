@@ -38,7 +38,8 @@ class CountItemViewController: UIViewController {
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        selectedItem.inventory.append(1)
+        let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! InventoryController
+        self.showDetailViewController(inventoryVC, sender: self)
         detailtemTableView.reloadData()
     }
     
