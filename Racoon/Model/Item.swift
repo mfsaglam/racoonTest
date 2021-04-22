@@ -12,9 +12,10 @@ struct Item {
     var packageQuantity: Int
     var unit: Item.ItemUnit
     var totalInventory: Int {
-        return inventory.reduce(0, +)
+        return 0
+        //TODO: - Calculate total inventory here
     }
-    var inventory: [Int] = [0]
+    var inventory: [Inventory] = []
     
     enum QuantityType {
         case package

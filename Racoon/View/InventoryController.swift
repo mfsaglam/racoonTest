@@ -9,19 +9,32 @@ import UIKit
 
 class InventoryController: UITableViewController {
     
+    var delegate: CreateNewStockDelegate?
+    
     @IBOutlet weak var unitSegment: UISegmentedControl!
     @IBOutlet weak var amountTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
         self.navigationItem.rightBarButtonItem = saveButton
-    }        
+        self.navigationItem.leftBarButtonItem = cancelButton
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        amountTextField.becomeFirstResponder()
+    }
     
     //MARK: - Selectors
     @objc func saveButtonTapped() {
         // set the inventory property array of the item
-        guard let amount = amountTextField.text else { return }
+        guard let amount = Int(amountTextField.text ?? "\(0)") else { return }
         var unit: Item.QuantityType {
             switch unitSegment.selectedSegmentIndex {
             case 0: return .package
@@ -29,6 +42,11 @@ class InventoryController: UITableViewController {
             default: return .package
             }
         }
-        print("inventory \(amount), \(unit)  succesfully created or adjusted")
+        let newInventory = Item.Inventory(amount: amount, type: unit)
+        delegate?.updateViewWithNewStock(stock: newInventory)
+    }
+    
+    @objc func cancelButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

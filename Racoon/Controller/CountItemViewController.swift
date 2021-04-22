@@ -29,6 +29,7 @@ class CountItemViewController: UIViewController {
         super.viewDidLoad()
         detailtemTableView.delegate = self
         detailtemTableView.dataSource = self
+        
         saveButton.layer.cornerRadius = saveButton.frame.size.height / 2
     }
     
@@ -39,7 +40,9 @@ class CountItemViewController: UIViewController {
     
     @IBAction func addButtonPressed(_ sender: Any) {
         let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! InventoryController
-        self.showDetailViewController(inventoryVC, sender: self)
+        let navigationC = UINavigationController(rootViewController: inventoryVC)
+        inventoryVC.delegate = self
+        self.showDetailViewController(navigationC, sender: self)
         detailtemTableView.reloadData()
     }
     
@@ -53,7 +56,9 @@ class CountItemViewController: UIViewController {
 extension CountItemViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! InventoryController
-        self.showDetailViewController(inventoryVC, sender: self)
+        let navigationC = UINavigationController(rootViewController: inventoryVC)
+        inventoryVC.delegate = self
+        self.showDetailViewController(navigationC, sender: self)
     }
 }
 
@@ -64,8 +69,18 @@ extension CountItemViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InventoryCell", for: indexPath)
-        cell.textLabel?.text = "\(selectedItem.inventory[indexPath.row])"
-        cell.detailTextLabel?.text = "kg"
+        let inventory = selectedItem.inventory[indexPath.row]
+        cell.textLabel?.text = "\(inventory.amount)"
+        cell.detailTextLabel?.text = "\(inventory.type)"
         return cell
+    }
+}
+
+extension CountItemViewController: CreateNewStockDelegate {
+    func updateViewWithNewStock(stock: Item.Inventory) {
+        self.dismiss(animated: true) {
+            self.selectedItem.inventory.append(stock)
+            self.detailtemTableView.reloadData()
+        }
     }
 }
