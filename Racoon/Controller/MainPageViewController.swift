@@ -17,19 +17,8 @@ class MainPageViewController: UIViewController {
         Item(name: "Item with Inventory", packageQuantity: 9, unit: .piece, inventory: [Item.Inventory(amount: 100, type: .package), Item.Inventory(amount: 18, type: .piece)])
     ]
     
-    var items: [Item] {
-        get {
-            switch segmentedSwitch.selectedSegmentIndex {
-            case 0:
-                return dataArray
-            case 1:
-                return dataArray.filter { $0.totalInventory != 0 }
-            case 2:
-                return dataArray.filter { $0.totalInventory == 0 }
-            default:
-                return dataArray
-            }
-        } set {
+    var items: [Item] = [] {
+        didSet {
             itemsTableView.reloadData()
         }
     }
@@ -45,6 +34,7 @@ class MainPageViewController: UIViewController {
         itemsTableView.dataSource = self
         searchBar.delegate = self
         configureSearchBar()
+        updateTableView(with: "")
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
         view.addGestureRecognizer(tapGestureRecognizer)
         tapGestureRecognizer.cancelsTouchesInView = false
@@ -66,6 +56,25 @@ class MainPageViewController: UIViewController {
         self.navigationController?.pushViewController(createItemVC, animated: true)
     }
     
+    func updateTableView(with query: String) {
+        if searchBar.text?.count == 0 {
+            items = dataArray
+        } else {
+            let searchString = query.capitalized
+            let searchedItems = dataArray.filter { $0.name.contains(searchString) }
+            switch segmentedSwitch.selectedSegmentIndex {
+            case 0:
+                items = searchedItems
+            case 1:
+                items = searchedItems.filter { $0.totalInventory != 0 }
+            case 2:
+                items = searchedItems.filter { $0.totalInventory == 0 }
+            default:
+                items = searchedItems
+            }
+        }
+    }
+    
     func configureSearchBar() {
         searchBar.placeholder = "Search"
         navigationItem.titleView = searchBar
@@ -74,7 +83,7 @@ class MainPageViewController: UIViewController {
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
-        itemsTableView.reloadData()
+        //TODO: - Make segment filter work here
     }
     
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
@@ -132,20 +141,14 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainPageViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        itemsTableView.reloadData()
+        updateTableView(with: "")
         searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         segmentedSwitch.selectedSegmentIndex = 0
         itemsTableView.reloadData()
-        if searchBar.text?.count == 0 {
-            itemsTableView.reloadData()
-        } else {
-            let searchString = searchText.capitalized
-            dataArray = dataArray.filter { $0.name.contains(searchString) }
-            itemsTableView.reloadData()
-        }
+        updateTableView(with: searchText)
     }
 }
 

@@ -19,6 +19,7 @@
 		126078362613916700A63FD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 126078342613916700A63FD0 /* LaunchScreen.storyboard */; };
 		1260784A26139DEA00A63FD0 /* CountItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260784926139DEA00A63FD0 /* CountItemViewController.swift */; };
 		126078532613B54900A63FD0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126078522613B54800A63FD0 /* Item.swift */; };
+		1298BFF0263231A30062350D /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1298BFEF263231A30062350D /* ItemManager.swift */; };
 		12D891AA26311470004AF3FD /* CreateNewStockDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D891A926311470004AF3FD /* CreateNewStockDelegate.swift */; };
 		12F2002E26231DFC00A4EAC7 /* CreateItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		126078372613916700A63FD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1260784926139DEA00A63FD0 /* CountItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountItemViewController.swift; sourceTree = "<group>"; };
 		126078522613B54800A63FD0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		1298BFEF263231A30062350D /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemManager.swift; path = Racoon/Model/ItemManager.swift; sourceTree = SOURCE_ROOT; };
 		12D891A926311470004AF3FD /* CreateNewStockDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateNewStockDelegate.swift; path = Racoon/Model/CreateNewStockDelegate.swift; sourceTree = SOURCE_ROOT; };
 		12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemTableViewController.swift; sourceTree = "<group>"; };
 		5982B319F4438F7FF59D8F0D /* Pods-Racoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.release.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.release.xcconfig"; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 			children = (
 				122A3DE0262AF82600F55D7D /* CreateItemDelegate.swift */,
 				12D891A926311470004AF3FD /* CreateNewStockDelegate.swift */,
+				1298BFEF263231A30062350D /* ItemManager.swift */,
 				126078522613B54800A63FD0 /* Item.swift */,
 			);
 			path = Model;
@@ -238,6 +241,7 @@
 				1260782E2613916600A63FD0 /* MainPageViewController.swift in Sources */,
 				1260782A2613916600A63FD0 /* AppDelegate.swift in Sources */,
 				1260784A26139DEA00A63FD0 /* CountItemViewController.swift in Sources */,
+				1298BFF0263231A30062350D /* ItemManager.swift in Sources */,
 				1260782C2613916600A63FD0 /* SceneDelegate.swift in Sources */,
 				1202ED28262FC6C200F9E9AA /* InventoryController.swift in Sources */,
 				126078532613B54900A63FD0 /* Item.swift in Sources */,
