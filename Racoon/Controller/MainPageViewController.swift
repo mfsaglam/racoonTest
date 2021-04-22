@@ -13,7 +13,8 @@ class MainPageViewController: UIViewController {
         Item(name: "Bacon Kg", packageQuantity: 100, unit: .kg),
         Item(name: "Fish Can 250g", packageQuantity: 50, unit: .piece),
         Item(name: "Patty pcs", packageQuantity: 100, unit: .piece),
-        Item(name: "Not Counted Item", packageQuantity: 0, unit: .kg)
+        Item(name: "Not Counted Item", packageQuantity: 0, unit: .kg),
+        Item(name: "Item with Inventory", packageQuantity: 9, unit: .piece, inventory: [Item.Inventory(amount: 100, type: .package), Item.Inventory(amount: 18, type: .piece)])
     ]
     
     var items: [Item] {
@@ -28,6 +29,8 @@ class MainPageViewController: UIViewController {
             default:
                 return dataArray
             }
+        } set {
+            itemsTableView.reloadData()
         }
     }
     
@@ -48,8 +51,7 @@ class MainPageViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItem))
     }
     
-    // MARK: - Selectors
-    
+// MARK: - Selectors
     @objc func dismissKeyboard() {
         searchBar.resignFirstResponder()
     }
@@ -87,7 +89,6 @@ class MainPageViewController: UIViewController {
 }
 
 //MARK: - UITableView Delegate and DataSource
-
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -95,7 +96,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
-        cell.textLabel?.text = dataArray[indexPath.row].name
+        cell.textLabel?.text = items[indexPath.row].name
         cell.detailTextLabel?.text = "\(items[indexPath.row].totalInventory) \(items[indexPath.row].unit)"
         return cell
     }

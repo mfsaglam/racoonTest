@@ -12,8 +12,15 @@ struct Item {
     var packageQuantity: Int
     var unit: Item.ItemUnit
     var totalInventory: Int {
-        return 0
-        //TODO: - Calculate total inventory here
+        var totalStock = 0
+        for stock in inventory {
+            if stock.type == .package {
+                totalStock += stock.amount * packageQuantity
+            } else {
+                totalStock += stock.amount
+            }
+        }
+        return totalStock
     }
     var inventory: [Inventory] = []
     
