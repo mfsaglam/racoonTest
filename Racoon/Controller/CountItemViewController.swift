@@ -10,6 +10,8 @@ import UIKit
 class CountItemViewController: UIViewController {
     
     var selectedItem: Item
+    var isEditingStock: Bool = false
+    var selectedStockIndex = 0
     
     init?(coder: NSCoder, selectedItem: Item) {
         self.selectedItem = selectedItem
@@ -39,10 +41,8 @@ class CountItemViewController: UIViewController {
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! InventoryController
-        let navigationC = UINavigationController(rootViewController: inventoryVC)
-        inventoryVC.delegate = self
-        self.showDetailViewController(navigationC, sender: self)
+        isEditingStock = false
+        self.showDetailViewController(configureInventoryVC(), sender: self)
         detailtemTableView.reloadData()
     }
     
@@ -51,17 +51,26 @@ class CountItemViewController: UIViewController {
         print("saved Item \(selectedItem)")
         navigationController?.popViewController(animated: true)
     }
-}
-
-extension CountItemViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    func configureInventoryVC() -> UIViewController {
         let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! InventoryController
         let navigationC = UINavigationController(rootViewController: inventoryVC)
         inventoryVC.delegate = self
-        self.showDetailViewController(navigationC, sender: self)
+        inventoryVC.navigationItem.title = self.isEditingStock ? "Edit Stock" : "Add Stock"
+        return navigationC
     }
 }
 
+//MARK: - UITableViewDelegate
+extension CountItemViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.isEditingStock = true
+        self.selectedStockIndex = indexPath.row
+        self.showDetailViewController(configureInventoryVC(), sender: self)
+    }
+}
+
+//MARK: - UITableViewDataSource
 extension CountItemViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         selectedItem.inventory.count
@@ -79,7 +88,11 @@ extension CountItemViewController: UITableViewDataSource {
 extension CountItemViewController: CreateNewStockDelegate {
     func updateViewWithNewStock(stock: Item.Inventory) {
         self.dismiss(animated: true) {
-            self.selectedItem.inventory.append(stock)
+            if self.isEditingStock == false {
+                self.selectedItem.inventory.append(stock)
+            } else {
+                self.selectedItem.inventory[self.selectedStockIndex] = stock
+            }
             self.detailtemTableView.reloadData()
         }
     }

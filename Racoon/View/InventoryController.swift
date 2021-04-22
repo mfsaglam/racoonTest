@@ -50,3 +50,15 @@ class InventoryController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
 }
+
+// MARK: - UITableViewDelegate
+
+extension InventoryController {
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+            print("deleted")
+        }
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+}
+
