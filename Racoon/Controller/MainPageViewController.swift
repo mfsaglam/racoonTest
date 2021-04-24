@@ -10,7 +10,6 @@ import UIKit
 class MainPageViewController: UIViewController {
     
     let manager = ItemManager()
-    
     lazy var dataArray = manager.getData()
     var items: [Item] = [] {
         didSet {
