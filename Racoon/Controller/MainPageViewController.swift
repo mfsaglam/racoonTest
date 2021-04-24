@@ -87,7 +87,18 @@ class MainPageViewController: UIViewController {
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
-        //TODO: - Make segment filter work here
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        switch segmentedSwitch.selectedSegmentIndex {
+        case 0:
+            items = dataArray
+        case 1:
+            items = dataArray.filter { $0.totalInventory != 0 }
+        case 2:
+            items = dataArray.filter { $0.totalInventory == 0 }
+        default:
+            items = dataArray
+        }
     }
     
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
