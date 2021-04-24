@@ -15,9 +15,13 @@ class MainPageViewController: UIViewController {
         Item(name: "Patty pcs", packageQuantity: 100, unit: .piece),
         Item(name: "Not Counted Item", packageQuantity: 0, unit: .kg),
         Item(name: "Item with Inventory", packageQuantity: 9, unit: .piece, inventory: [Item.Inventory(amount: 100, type: .package), Item.Inventory(amount: 18, type: .piece)])
-    ]
+    ] {
+        didSet {
+            items = dataArray
+        }
+    }
     
-    var items: [Item] = [] {
+    lazy var items: [Item] = [] {
         didSet {
             itemsTableView.reloadData()
         }
@@ -124,7 +128,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
             self.dataArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            //tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
@@ -157,7 +161,7 @@ extension MainPageViewController: CreateItemDelegate {
     func updateViewWithNewItem(item: Item) {
         self.dismiss(animated: true) {
             self.dataArray.append(item)
-            self.itemsTableView.reloadData()
+            self.items = self.dataArray
         }
     }
 }
