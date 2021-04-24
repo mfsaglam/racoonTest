@@ -68,6 +68,16 @@ extension CountItemViewController: UITableViewDelegate {
         self.selectedStockIndex = indexPath.row
         self.showDetailViewController(configureInventoryVC(), sender: self)
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+            self.selectedItem.inventory.remove(at: indexPath.row)
+            self.detailtemTableView.deleteRows(at: [indexPath], with: .automatic)
+            print(self.selectedItem.inventory)
+        }
+        let actions = UISwipeActionsConfiguration(actions: [delete])
+        return actions
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -85,6 +95,7 @@ extension CountItemViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - CreateNewStockDelegate
 extension CountItemViewController: CreateNewStockDelegate {
     func updateViewWithNewStock(stock: Item.Inventory) {
         self.dismiss(animated: true) {
