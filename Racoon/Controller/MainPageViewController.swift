@@ -63,6 +63,7 @@ class MainPageViewController: UIViewController {
             let searchString = query.capitalized
             let searchedItems = dataArray.filter { $0.name.contains(searchString) }
             switch segmentedSwitch.selectedSegmentIndex {
+            //TODO: - Solve the issue with edited items
             case 0:
                 items = searchedItems
             case 1:
@@ -140,7 +141,11 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
-            print("Edit")
+            let name = "edited"
+            let packageQuantity = 1
+            let unit: Item.ItemUnit = .kg
+            self.manager.editItem(at: indexPath.row, name: name, packageQuantity: packageQuantity, unit: unit)
+            self.items = self.dataArray
         }
         delete.image = UIImage(systemName: "xmark")
         edit.image = UIImage(systemName: "square.and.pencil")
@@ -165,7 +170,6 @@ extension MainPageViewController: UISearchBarDelegate {
 }
 
 //MARK: - CreateItemDelegate
-//TODO: - Make manager handle this
 extension MainPageViewController: CreateItemDelegate {
     func updateViewWithNewItem(item: Item) {
         self.dismiss(animated: true) {
