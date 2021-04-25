@@ -24,6 +24,10 @@ struct ItemManager {
         dataArray.remove(at: index)
     }
     
+    mutating func addItem(_ item: Item) {
+        dataArray.append(item)
+    }
+    
     mutating func editItem(at index: Int, name: String, packageQuantity: Int, unit: Item.ItemUnit) {
         dataArray[index].name = name
         dataArray[index].packageQuantity = packageQuantity

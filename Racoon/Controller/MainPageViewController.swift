@@ -9,8 +9,14 @@ import UIKit
 
 class MainPageViewController: UIViewController {
     
-    let manager = ItemManager()
-    lazy var dataArray = manager.getData()
+    var manager = ItemManager()
+    var dataArray: [Item] {
+        get {
+            manager.getData()
+        } set {
+            items = newValue
+        }
+    }
     var items: [Item] = [] {
         didSet {
             itemsTableView.reloadData()
@@ -128,7 +134,8 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
-            self.dataArray.remove(at: indexPath.row)
+            manager.deleteItem(at: indexPath.row)
+            items = dataArray
             //tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
@@ -158,10 +165,11 @@ extension MainPageViewController: UISearchBarDelegate {
 }
 
 //MARK: - CreateItemDelegate
+//TODO: - Make manager handle this
 extension MainPageViewController: CreateItemDelegate {
     func updateViewWithNewItem(item: Item) {
         self.dismiss(animated: true) {
-            self.dataArray.append(item)
+            self.manager.addItem(item)
             self.items = self.dataArray
         }
     }
