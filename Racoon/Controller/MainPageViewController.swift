@@ -13,8 +13,6 @@ class MainPageViewController: UIViewController {
     var dataArray: [Item] {
         get {
             manager.getData()
-        } set {
-            items = newValue
         }
     }
     var items: [Item] = [] {
@@ -129,23 +127,26 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         }) else {
             fatalError("CountItemViewController not found")
         }
-        
         self.navigationController?.pushViewController(countItemVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //MARK: - Delete Action
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
             manager.deleteItem(at: indexPath.row)
             items = dataArray
             //tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        
-        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
-            let name = "edited"
-            let packageQuantity = 1
-            let unit: Item.ItemUnit = .kg
-            self.manager.editItem(at: indexPath.row, name: name, packageQuantity: packageQuantity, unit: unit)
-            self.items = self.dataArray
+        //MARK: - Edit Action
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, complete) in
+            let selectedItem = self.items[indexPath.row]
+            let editItemVC = self.storyboard?.instantiateViewController(identifier: "EditItemTableViewControllerID", creator: { coder in
+                return EditItemTableViewController(coder: coder, selectedItem: selectedItem, indexPath: indexPath.row)
+            })
+            let navigationC = UINavigationController(rootViewController: editItemVC!)
+            editItemVC?.delegate = self
+            self.showDetailViewController(navigationC, sender: self)
+            complete(true)
         }
         delete.image = UIImage(systemName: "xmark")
         edit.image = UIImage(systemName: "square.and.pencil")
@@ -174,6 +175,16 @@ extension MainPageViewController: CreateItemDelegate {
     func updateViewWithNewItem(item: Item) {
         self.dismiss(animated: true) {
             self.manager.addItem(item)
+            self.items = self.dataArray
+        }
+    }
+}
+
+//MARK: - EditItemDelegate
+extension MainPageViewController: EditItemDelegate {
+    func EditItemWith(newName: String, newUnit: Item.ItemUnit, newPackageQuantity: Int, indexPath: Int) {
+        self.dismiss(animated: true) {
+            self.manager.editItem(at: indexPath , name: newName, packageQuantity: newPackageQuantity, unit: newUnit)
             self.items = self.dataArray
         }
     }

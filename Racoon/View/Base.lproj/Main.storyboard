@@ -172,14 +172,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hm0-oT-PHM">
-                                                    <rect key="frame" x="20" y="11" width="32" height="22"/>
+                                                    <rect key="frame" x="20" y="10" width="32" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9G9-Oo-5Ua">
-                                                    <rect key="frame" x="189" y="6" width="181" height="32"/>
+                                                    <rect key="frame" x="186" y="4" width="182" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <segments>
                                                         <segment title="Package"/>
@@ -197,14 +197,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfD-7U-IGh">
-                                                    <rect key="frame" x="20" y="9" width="60" height="20"/>
+                                                    <rect key="frame" x="20" y="8" width="60" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bMU-1b-hzU">
-                                                    <rect key="frame" x="190" y="1" width="180" height="35"/>
+                                                    <rect key="frame" x="189" y="6" width="179" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -228,7 +228,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LuQ-Ch-9yy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3873.8461538461538" y="438.62559241706157"/>
+            <point key="canvasLocation" x="3738" y="439"/>
         </scene>
         <!--Racoon-->
         <scene sceneID="7zq-WM-IaB">
@@ -274,7 +274,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Item Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhW-V7-Gfb">
-                                                    <rect key="frame" x="194" y="3" width="173" height="37"/>
+                                                    <rect key="frame" x="192" y="-1" width="173" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
@@ -297,7 +297,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="t7p-oW-itO">
-                                                    <rect key="frame" x="194" y="11" width="173" height="32"/>
+                                                    <rect key="frame" x="192" y="8" width="173" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <segments>
                                                         <segment title="Piece"/>
@@ -322,7 +322,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter quantity" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LvN-um-pFL">
-                                                    <rect key="frame" x="194" y="9" width="173" height="34"/>
+                                                    <rect key="frame" x="192" y="7" width="173" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -375,7 +375,7 @@
             </objects>
             <point key="canvasLocation" x="2944.6153846153843" y="438.62559241706157"/>
         </scene>
-        <!--Create New Item-->
+        <!--Edit Item-->
         <scene sceneID="OJN-JF-5XQ">
             <objects>
                 <tableViewController storyboardIdentifier="EditItemTableViewControllerID" id="vWH-Fn-xXF" customClass="EditItemTableViewController" customModule="Racoon" customModuleProvider="target" sceneMemberID="viewController">
@@ -384,7 +384,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Edit Item" id="IWH-MY-7nG">
+                            <tableViewSection id="IWH-MY-7nG">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="LG3-ok-CNw" style="IBUITableViewCellStyleDefault" id="WeD-ig-lo0">
                                         <rect key="frame" x="0.0" y="28" width="390" height="43.5"/>
@@ -400,8 +400,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter new name" borderStyle="roundedRect" placeholder="Enter Item Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s04-mi-Pjm">
-                                                    <rect key="frame" x="194" y="3" width="173" height="37"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Item Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s04-mi-Pjm">
+                                                    <rect key="frame" x="192" y="1" width="173" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
@@ -424,7 +424,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2IF-nZ-jD4">
-                                                    <rect key="frame" x="194" y="11" width="173" height="32"/>
+                                                    <rect key="frame" x="192" y="10" width="173" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <segments>
                                                         <segment title="Piece"/>
@@ -448,8 +448,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter new quantity" borderStyle="roundedRect" placeholder="Enter quantity" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9sA-Fc-ZG1">
-                                                    <rect key="frame" x="194" y="9" width="173" height="34"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new quantity" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9sA-Fc-ZG1">
+                                                    <rect key="frame" x="192" y="6" width="173" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -465,24 +465,36 @@
                             <outlet property="delegate" destination="vWH-Fn-xXF" id="1zK-OO-nwg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Create New Item" id="RfD-QZ-Y7L">
+                    <navigationItem key="navigationItem" title="Edit Item" id="RfD-QZ-Y7L">
                         <barButtonItem key="backBarButtonItem" title="Cancel" id="OLH-cf-vYa"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="TRX-J2-hGn">
-                            <connections>
-                                <action selector="savePressed:" destination="vWH-Fn-xXF" id="g3f-7g-Ccw"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="nameTextField" destination="s04-mi-Pjm" id="vCX-IQ-1fH"/>
                         <outlet property="quantityTextField" destination="9sA-Fc-ZG1" id="rtY-I5-WTm"/>
-                        <outlet property="saveButton" destination="TRX-J2-hGn" id="iwe-TH-SPr"/>
                         <outlet property="unitSegment" destination="2IF-nZ-jD4" id="Yqd-aM-PNg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjG-Xi-XnD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2832" y="-255"/>
+            <point key="canvasLocation" x="3623" y="-255"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="C2D-4W-ZpP">
+            <objects>
+                <navigationController storyboardIdentifier="EditItemNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="mma-0Z-FaA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qRZ-tM-dyd">
+                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vWH-Fn-xXF" kind="relationship" relationship="rootViewController" id="9vM-U9-0Tl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sXF-qE-ukI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2830.7692307692305" y="-255.21327014218008"/>
         </scene>
     </scenes>
     <resources>
