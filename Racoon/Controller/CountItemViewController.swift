@@ -12,6 +12,7 @@ class CountItemViewController: UIViewController {
     var selectedItem: Item
     var isEditingStock: Bool = false
     var selectedStockIndex = 0
+    var delegate: ItemDelegate?
     
     init?(coder: NSCoder, selectedItem: Item) {
         self.selectedItem = selectedItem
@@ -48,7 +49,7 @@ class CountItemViewController: UIViewController {
     
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        print("saved Item \(selectedItem)")
+        //somehow make manager to update selectedItem here
         navigationController?.popViewController(animated: true)
     }
     
@@ -96,7 +97,7 @@ extension CountItemViewController: UITableViewDataSource {
 }
 
 //MARK: - CreateNewStockDelegate
-extension CountItemViewController: CreateNewStockDelegate {
+extension CountItemViewController: ItemDelegate {
     func updateViewWithNewStock(stock: Item.Inventory) {
         self.dismiss(animated: true) {
             if self.isEditingStock == false {

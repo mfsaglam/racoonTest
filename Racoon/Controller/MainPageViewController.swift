@@ -170,18 +170,15 @@ extension MainPageViewController: UISearchBarDelegate {
     }
 }
 
-//MARK: - CreateItemDelegate
-extension MainPageViewController: CreateItemDelegate {
+//MARK: - ItemDelegate
+extension MainPageViewController: ItemDelegate {
     func updateViewWithNewItem(item: Item) {
         self.dismiss(animated: true) {
             self.manager.addItem(item)
             self.items = self.dataArray
         }
     }
-}
-
-//MARK: - EditItemDelegate
-extension MainPageViewController: EditItemDelegate {
+    
     func EditItemWith(newName: String, newUnit: Item.ItemUnit, newPackageQuantity: Int, indexPath: Int) {
         self.dismiss(animated: true) {
             self.manager.editItem(at: indexPath , name: newName, packageQuantity: newPackageQuantity, unit: newUnit)

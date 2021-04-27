@@ -14,7 +14,7 @@ class CreateItemTableViewController: UITableViewController {
     @IBOutlet weak var unitSegment: UISegmentedControl!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
-    var delegate: CreateItemDelegate?
+    var delegate: ItemDelegate?
         
     override func viewDidLoad() {
         super.viewDidLoad()

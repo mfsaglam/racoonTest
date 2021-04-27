@@ -9,7 +9,7 @@ import UIKit
 
 class EditItemTableViewController: UITableViewController {
     
-    var delegate: EditItemDelegate?
+    var delegate: ItemDelegate?
     var selectedItem: Item
     var selectedIndex: Int
     

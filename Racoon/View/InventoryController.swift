@@ -9,7 +9,7 @@ import UIKit
 
 class InventoryController: UITableViewController {
     
-    var delegate: CreateNewStockDelegate?
+    var delegate: ItemDelegate?
     
     @IBOutlet weak var unitSegment: UISegmentedControl!
     @IBOutlet weak var amountTextField: UITextField!

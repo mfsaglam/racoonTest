@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		073962B8931C51D9044BC072 /* Pods_Racoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FADB74A8A71051F76C9E147E /* Pods_Racoon.framework */; };
 		1202ED28262FC6C200F9E9AA /* InventoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1202ED27262FC6C200F9E9AA /* InventoryController.swift */; };
-		122A3DE1262AF82600F55D7D /* CreateItemDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3DE0262AF82600F55D7D /* CreateItemDelegate.swift */; };
-		123821EA2635536600318CB9 /* EditItemDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123821E92635536600318CB9 /* EditItemDelegate.swift */; };
+		122A3DE1262AF82600F55D7D /* ItemDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3DE0262AF82600F55D7D /* ItemDelegate.swift */; };
 		1260782A2613916600A63FD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126078292613916600A63FD0 /* AppDelegate.swift */; };
 		1260782C2613916600A63FD0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260782B2613916600A63FD0 /* SceneDelegate.swift */; };
 		1260782E2613916600A63FD0 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1260782D2613916600A63FD0 /* MainPageViewController.swift */; };
@@ -21,15 +20,13 @@
 		126078532613B54900A63FD0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126078522613B54800A63FD0 /* Item.swift */; };
 		1298BFF0263231A30062350D /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1298BFEF263231A30062350D /* ItemManager.swift */; };
 		12BF00CD26350D0A00DFE779 /* EditItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BF00CC26350D0A00DFE779 /* EditItemTableViewController.swift */; };
-		12D891AA26311470004AF3FD /* CreateNewStockDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D891A926311470004AF3FD /* CreateNewStockDelegate.swift */; };
 		12F2002E26231DFC00A4EAC7 /* CreateItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0F59003ACDB95CA37B1A3384 /* Pods-Racoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.debug.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.debug.xcconfig"; sourceTree = "<group>"; };
 		1202ED27262FC6C200F9E9AA /* InventoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InventoryController.swift; path = Racoon/View/InventoryController.swift; sourceTree = SOURCE_ROOT; };
-		122A3DE0262AF82600F55D7D /* CreateItemDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemDelegate.swift; sourceTree = "<group>"; };
-		123821E92635536600318CB9 /* EditItemDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemDelegate.swift; sourceTree = "<group>"; };
+		122A3DE0262AF82600F55D7D /* ItemDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDelegate.swift; sourceTree = "<group>"; };
 		126078262613916600A63FD0 /* Racoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Racoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		126078292613916600A63FD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1260782B2613916600A63FD0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,7 +39,6 @@
 		126078522613B54800A63FD0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		1298BFEF263231A30062350D /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemManager.swift; path = Racoon/Model/ItemManager.swift; sourceTree = SOURCE_ROOT; };
 		12BF00CC26350D0A00DFE779 /* EditItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemTableViewController.swift; sourceTree = "<group>"; };
-		12D891A926311470004AF3FD /* CreateNewStockDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateNewStockDelegate.swift; path = Racoon/Model/CreateNewStockDelegate.swift; sourceTree = SOURCE_ROOT; };
 		12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemTableViewController.swift; sourceTree = "<group>"; };
 		5982B319F4438F7FF59D8F0D /* Pods-Racoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.release.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.release.xcconfig"; sourceTree = "<group>"; };
 		FADB74A8A71051F76C9E147E /* Pods_Racoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Racoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,9 +79,7 @@
 		122A3DDF262AF7F900F55D7D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				122A3DE0262AF82600F55D7D /* CreateItemDelegate.swift */,
-				12D891A926311470004AF3FD /* CreateNewStockDelegate.swift */,
-				123821E92635536600318CB9 /* EditItemDelegate.swift */,
+				122A3DE0262AF82600F55D7D /* ItemDelegate.swift */,
 				1298BFEF263231A30062350D /* ItemManager.swift */,
 				126078522613B54800A63FD0 /* Item.swift */,
 			);
@@ -239,8 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12F2002E26231DFC00A4EAC7 /* CreateItemTableViewController.swift in Sources */,
-				123821EA2635536600318CB9 /* EditItemDelegate.swift in Sources */,
-				122A3DE1262AF82600F55D7D /* CreateItemDelegate.swift in Sources */,
+				122A3DE1262AF82600F55D7D /* ItemDelegate.swift in Sources */,
 				1260782E2613916600A63FD0 /* MainPageViewController.swift in Sources */,
 				1260782A2613916600A63FD0 /* AppDelegate.swift in Sources */,
 				1260784A26139DEA00A63FD0 /* CountItemViewController.swift in Sources */,
@@ -248,7 +241,6 @@
 				1260782C2613916600A63FD0 /* SceneDelegate.swift in Sources */,
 				1202ED28262FC6C200F9E9AA /* InventoryController.swift in Sources */,
 				126078532613B54900A63FD0 /* Item.swift in Sources */,
-				12D891AA26311470004AF3FD /* CreateNewStockDelegate.swift in Sources */,
 				12BF00CD26350D0A00DFE779 /* EditItemTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
