@@ -65,9 +65,9 @@ class MainPageViewController: UIViewController {
             case 0:
                 items = searchedItems
             case 1:
-                items = searchedItems.filter { $0.totalInventory != 0 }
+                items = searchedItems.filter { $0.totalStock != 0 }
             case 2:
-                items = searchedItems.filter { $0.totalInventory == 0 }
+                items = searchedItems.filter { $0.totalStock == 0 }
             default:
                 items = searchedItems
             }
@@ -88,9 +88,9 @@ class MainPageViewController: UIViewController {
         case 0:
             items = dataArray
         case 1:
-            items = dataArray.filter { $0.totalInventory != 0 }
+            items = dataArray.filter { $0.totalStock != 0 }
         case 2:
-            items = dataArray.filter { $0.totalInventory == 0 }
+            items = dataArray.filter { $0.totalStock == 0 }
         default:
             items = dataArray
         }
@@ -116,14 +116,14 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
         cell.textLabel?.text = items[indexPath.row].name
-        cell.detailTextLabel?.text = "\(items[indexPath.row].totalInventory) \(items[indexPath.row].unit)"
+        cell.detailTextLabel?.text = "\(items[indexPath.row].totalStock) \(items[indexPath.row].unit)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         guard let countItemVC = self.storyboard?.instantiateViewController(identifier: "CountItemViewControllerID", creator: { coder in
-            return CountItemViewController(coder: coder, selectedItem: item)
+            return InventoryViewController(coder: coder, selectedItem: item, selectedIndex: indexPath.row)
         }) else {
             fatalError("CountItemViewController not found")
         }
@@ -172,18 +172,22 @@ extension MainPageViewController: UISearchBarDelegate {
 
 //MARK: - ItemDelegate
 extension MainPageViewController: ItemDelegate {
-    func updateViewWithNewItem(item: Item) {
+    func item(updateViewWithNewItem item: Item) {
         self.dismiss(animated: true) {
             self.manager.addItem(item)
             self.items = self.dataArray
         }
     }
     
-    func EditItemWith(newName: String, newUnit: Item.ItemUnit, newPackageQuantity: Int, indexPath: Int) {
+    func item(editItemWithNewName name: String, newUnit: Item.Unit, newPackageQuantity: Int, indexPath: Int) {
         self.dismiss(animated: true) {
-            self.manager.editItem(at: indexPath , name: newName, packageQuantity: newPackageQuantity, unit: newUnit)
+            self.manager.editItem(at: indexPath, name: name, packageQuantity: newPackageQuantity, unit: newUnit)
             self.items = self.dataArray
         }
+    }
+    
+    func item(updateInventoryWithNewInventory inventory: [Item.Stock], indexPath: Int) {
+        manager.updateInventory(at: indexPath, inventory: inventory)
     }
 }
 

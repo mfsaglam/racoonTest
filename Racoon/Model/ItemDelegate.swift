@@ -8,21 +8,23 @@
 import Foundation
 
 protocol ItemDelegate {
-    func updateViewWithNewItem(item: Item)
-    func updateViewWithNewStock(stock: Item.Inventory)
-    func EditItemWith(newName: String, newUnit: Item.ItemUnit, newPackageQuantity: Int, indexPath: Int)
+    func item(updateViewWithNewItem item: Item)
+    func item(updateViewWithNewStock stock: Item.Stock)
+    func item(editItemWithNewName name: String, newUnit: Item.Unit, newPackageQuantity: Int, indexPath: Int)
+    func item(updateInventoryWithNewInventory inventory: [Item.Stock], indexPath: Int)
 }
 
 extension ItemDelegate {
-    func updateViewWithNewItem(item: Item) {
-        //default implementation here
+    func item(updateViewWithNewItem item: Item) {
+        //default
     }
-    
-    func updateViewWithNewStock(stock: Item.Inventory) {
-        //default implementation here
+    func item(updateViewWithNewStock stock: Item.Stock) {
+        //default
     }
-    
-    func EditItemWith(newName: String, newUnit: Item.ItemUnit, newPackageQuantity: Int, indexPath: Int) {
-        //default implementation here
+    func item(editItemWithNewName name: String, newUnit: Item.Unit, newPackageQuantity: Int, indexPath: Int) {
+        //default
+    }
+    func item(updateInventoryWithNewInventory inventory: [Item.Stock], indexPath: Int) {
+        //default
     }
 }

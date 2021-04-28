@@ -38,13 +38,13 @@ class CreateItemTableViewController: UITableViewController {
             return
         }
         
-        var unit: Item.ItemUnit {
+        var unit: Item.Unit {
             return unitSegment.selectedSegmentIndex == 0 ? .piece : .kg
         }
         
         let item = Item(name: itemName, packageQuantity: packQuantity, unit: unit)
         print("\(item) is succesfully created")
-        delegate?.updateViewWithNewItem(item: item)
+        delegate?.item(updateViewWithNewItem: item)
         navigationController?.popViewController(animated: true)
     }
 }

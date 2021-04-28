@@ -1,5 +1,5 @@
 //
-//  CountItemViewController.swift
+//  InventoryViewController.swift
 //  Racoon
 //
 //  Created by Fatih Sağlam on 30.03.2021.
@@ -7,15 +7,17 @@
 
 import UIKit
 
-class CountItemViewController: UIViewController {
-    
+class InventoryViewController: UIViewController {
+        
     var selectedItem: Item
+    var selectedIndex: Int
     var isEditingStock: Bool = false
     var selectedStockIndex = 0
     var delegate: ItemDelegate?
     
-    init?(coder: NSCoder, selectedItem: Item) {
+    init?(coder: NSCoder, selectedItem: Item, selectedIndex: Int) {
         self.selectedItem = selectedItem
+        self.selectedIndex = selectedIndex
         super.init(coder: coder)
     }
     
@@ -49,12 +51,13 @@ class CountItemViewController: UIViewController {
     
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        //somehow make manager to update selectedItem here
+        //TODO: - This is not working!
+        delegate?.item(updateInventoryWithNewInventory: selectedItem.inventory, indexPath: selectedIndex)
         navigationController?.popViewController(animated: true)
     }
     
     func configureInventoryVC() -> UIViewController {
-        let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! InventoryController
+        let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! AddStockViewController
         let navigationC = UINavigationController(rootViewController: inventoryVC)
         inventoryVC.delegate = self
         inventoryVC.navigationItem.title = self.isEditingStock ? "Edit Stock" : "Add Stock"
@@ -63,7 +66,7 @@ class CountItemViewController: UIViewController {
 }
 
 //MARK: - UITableViewDelegate
-extension CountItemViewController: UITableViewDelegate {
+extension InventoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.isEditingStock = true
         self.selectedStockIndex = indexPath.row
@@ -71,7 +74,9 @@ extension CountItemViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //MARK: - Delete Swipe
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+            //TODO: - make manager to delete it
             self.selectedItem.inventory.remove(at: indexPath.row)
             self.detailtemTableView.deleteRows(at: [indexPath], with: .automatic)
             print(self.selectedItem.inventory)
@@ -82,7 +87,7 @@ extension CountItemViewController: UITableViewDelegate {
 }
 
 //MARK: - UITableViewDataSource
-extension CountItemViewController: UITableViewDataSource {
+extension InventoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         selectedItem.inventory.count
     }
@@ -97,8 +102,8 @@ extension CountItemViewController: UITableViewDataSource {
 }
 
 //MARK: - CreateNewStockDelegate
-extension CountItemViewController: ItemDelegate {
-    func updateViewWithNewStock(stock: Item.Inventory) {
+extension InventoryViewController: ItemDelegate {
+    func updateViewWithNewStock(stock: Item.Stock) {
         self.dismiss(animated: true) {
             if self.isEditingStock == false {
                 self.selectedItem.inventory.append(stock)

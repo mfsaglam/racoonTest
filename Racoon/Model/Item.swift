@@ -10,8 +10,8 @@ import Foundation
 struct Item {
     var name: String
     var packageQuantity: Int
-    var unit: Item.ItemUnit
-    var totalInventory: Int {
+    var unit: Item.Unit
+    var totalStock: Int {
         var totalStock = 0
         for stock in inventory {
             if stock.type == .package {
@@ -22,19 +22,19 @@ struct Item {
         }
         return totalStock
     }
-    var inventory: [Inventory] = []
+    var inventory: [Stock] = []
     
-    enum QuantityType {
+    enum StockType {
         case package
         case piece
     }
     
-    struct Inventory {
+    struct Stock {
         var amount: Int
-        var type: Item.QuantityType
+        var type: Item.StockType
     }
     
-    enum ItemUnit {
+    enum Unit {
         case kg
         case piece
     }
