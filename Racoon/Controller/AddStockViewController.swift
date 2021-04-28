@@ -1,5 +1,5 @@
 //
-//  InventoryController.swift
+//  AddStockViewController.swift
 //  Racoon
 //
 //  Created by Fatih Sağlam on 21.04.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InventoryController: UITableViewController {
+class AddStockViewController: UITableViewController {
     
     var delegate: ItemDelegate?
     
@@ -35,15 +35,16 @@ class InventoryController: UITableViewController {
     @objc func saveButtonTapped() {
         // set the inventory property array of the item
         guard let amount = Int(amountTextField.text ?? "\(0)") else { return }
-        var unit: Item.QuantityType {
+        var unit: Item.StockType {
             switch unitSegment.selectedSegmentIndex {
             case 0: return .package
             case 1: return .piece
             default: return .package
             }
         }
-        let newInventory = Item.Inventory(amount: amount, type: unit)
-        delegate?.updateViewWithNewStock(stock: newInventory)
+        let newStock = Item.Stock(amount: amount, type: unit)
+        delegate?.item(updateViewWithNewStock: newStock)
+        //TODO: - It doesnt dismiss
     }
     
     @objc func cancelButtonTapped() {
@@ -53,7 +54,7 @@ class InventoryController: UITableViewController {
 
 // MARK: - UITableViewDelegate
 
-extension InventoryController {
+extension AddStockViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
             print("deleted")

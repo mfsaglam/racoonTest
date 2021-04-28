@@ -25,7 +25,7 @@
 
 /* Begin PBXFileReference section */
 		0F59003ACDB95CA37B1A3384 /* Pods-Racoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Racoon.debug.xcconfig"; path = "Target Support Files/Pods-Racoon/Pods-Racoon.debug.xcconfig"; sourceTree = "<group>"; };
-		1202ED27262FC6C200F9E9AA /* AddStockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddStockViewController.swift; path = Racoon/View/AddStockViewController.swift; sourceTree = SOURCE_ROOT; };
+		1202ED27262FC6C200F9E9AA /* AddStockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddStockViewController.swift; path = Racoon/Controller/AddStockViewController.swift; sourceTree = SOURCE_ROOT; };
 		122A3DE0262AF82600F55D7D /* ItemDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDelegate.swift; sourceTree = "<group>"; };
 		126078262613916600A63FD0 /* Racoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Racoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		126078292613916600A63FD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
