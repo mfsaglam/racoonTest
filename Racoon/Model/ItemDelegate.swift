@@ -8,23 +8,50 @@
 import Foundation
 
 protocol ItemDelegate {
-    func item(updateViewWithNewItem item: Item)
-    func item(updateViewWithNewStock stock: Item.Stock)
-    func item(editItemWithNewName name: String, newUnit: Item.Unit, newPackageQuantity: Int, indexPath: Int)
-    func item(updateInventoryWithNewInventory inventory: [Item.Stock], indexPath: Int)
+    var manager: ItemManager { get set }
+    
+    func item(deleteItemAt index: Int)
+
+    func item(addItem item: Item)
+
+    func item(editItemAt index: Int, name: String, packageQuantity: Int, unit: Item.Unit)
+
+    func item(editStockAt index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType)
+
+    func item(updateInventoryAt index: Int, inventory: [Item.Stock])
+
+    func item(addStockAt index: Int, newStock: Item.Stock)
 }
 
 extension ItemDelegate {
-    func item(updateViewWithNewItem item: Item) {
-        //default
+    
+    //TODO: - I gave default implementations but these functions are still required by the class who conforms them. Why?
+    
+    var manager: ItemManager {
+        return ItemManager()
     }
-    func item(updateViewWithNewStock stock: Item.Stock) {
-        //default
+        
+    mutating func item(deleteItemAt index: Int) {
+        manager.deleteItem(at: index)
     }
-    func item(editItemWithNewName name: String, newUnit: Item.Unit, newPackageQuantity: Int, indexPath: Int) {
-        //default
+
+    mutating func item(addItem item: Item) {
+        manager.addItem(item)
     }
-    func item(updateInventoryWithNewInventory inventory: [Item.Stock], indexPath: Int) {
-        //default
+
+    mutating func item(editItemAt index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
+        manager.editItem(at: index, name: name, packageQuantity: packageQuantity, unit: unit)
+    }
+
+    mutating func item(editStockAt index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType) {
+        manager.editStock(at: index, inventoryIndex: inventoryIndex, newStock: newStock, newType: newType)
+    }
+
+    mutating func item(updateInventoryAt index: Int, inventory: [Item.Stock]) {
+        manager.updateInventory(at: index, inventory: inventory)
+    }
+
+    mutating func item(addStockAt index: Int, newStock: Item.Stock) {
+        manager.addStock(at: index, newStock: newStock)
     }
 }

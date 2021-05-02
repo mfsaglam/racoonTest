@@ -172,23 +172,7 @@ extension MainPageViewController: UISearchBarDelegate {
 
 //MARK: - ItemDelegate
 extension MainPageViewController: ItemDelegate {
-    func item(updateViewWithNewItem item: Item) {
-        self.dismiss(animated: true) {
-            self.manager.addItem(item)
-            self.items = self.dataArray
-        }
-    }
-    
-    func item(editItemWithNewName name: String, newUnit: Item.Unit, newPackageQuantity: Int, indexPath: Int) {
-        self.dismiss(animated: true) {
-            self.manager.editItem(at: indexPath, name: name, packageQuantity: newPackageQuantity, unit: newUnit)
-            self.items = self.dataArray
-        }
-    }
-    
-    func item(updateInventoryWithNewInventory inventory: [Item.Stock], indexPath: Int) {
-        manager.updateInventory(at: indexPath, inventory: inventory)
-    }
+    //TODO: - Why Type 'MainPageViewController' does not conform to protocol 'ItemDelegate'?
 }
 
 

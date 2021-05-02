@@ -43,8 +43,7 @@ class AddStockViewController: UITableViewController {
             }
         }
         let newStock = Item.Stock(amount: amount, type: unit)
-        delegate?.item(updateViewWithNewStock: newStock)
-        //TODO: - It doesnt dismiss
+//        delegate?.item(updateViewWithNewStock: newStock)
     }
     
     @objc func cancelButtonTapped() {

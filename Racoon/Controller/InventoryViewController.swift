@@ -8,6 +8,8 @@
 import UIKit
 
 class InventoryViewController: UIViewController {
+    
+    var manager = ItemManager()
         
     var selectedItem: Item
     var selectedIndex: Int
@@ -98,19 +100,5 @@ extension InventoryViewController: UITableViewDataSource {
         cell.textLabel?.text = "\(inventory.amount)"
         cell.detailTextLabel?.text = "\(inventory.type)"
         return cell
-    }
-}
-
-//MARK: - CreateNewStockDelegate
-extension InventoryViewController: ItemDelegate {
-    func updateViewWithNewStock(stock: Item.Stock) {
-        self.dismiss(animated: true) {
-            if self.isEditingStock == false {
-                self.selectedItem.inventory.append(stock)
-            } else {
-                self.selectedItem.inventory[self.selectedStockIndex] = stock
-            }
-            self.detailtemTableView.reloadData()
-        }
     }
 }

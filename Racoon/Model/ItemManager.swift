@@ -36,4 +36,8 @@ struct ItemManager {
     mutating func updateInventory(at index: Int, inventory: [Item.Stock]) {
         dataArray[index].inventory = inventory
     }
+    
+    mutating func addStock(at index: Int, newStock: Item.Stock) {
+        dataArray[index].inventory.append(newStock)
+    }
 }
