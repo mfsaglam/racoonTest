@@ -79,11 +79,18 @@
 		122A3DDF262AF7F900F55D7D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				122A3DE0262AF82600F55D7D /* ItemDelegate.swift */,
 				1298BFEF263231A30062350D /* ItemManager.swift */,
 				126078522613B54800A63FD0 /* Item.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		12492061263EC710006D4F60 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				122A3DE0262AF82600F55D7D /* ItemDelegate.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		1260781D2613916600A63FD0 = {
@@ -112,6 +119,7 @@
 				122A3DDC262AF7DD00F55D7D /* View */,
 				122A3DDD262AF7EC00F55D7D /* Controller */,
 				122A3DDF262AF7F900F55D7D /* Model */,
+				12492061263EC710006D4F60 /* Protocols */,
 				126078322613916700A63FD0 /* Assets.xcassets */,
 				126078342613916700A63FD0 /* LaunchScreen.storyboard */,
 				126078372613916700A63FD0 /* Info.plist */,

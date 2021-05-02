@@ -177,8 +177,8 @@ extension MainPageViewController: UISearchBarDelegate {
 }
 
 //MARK: - ItemDelegate
-//extension MainPageViewController: ItemDelegate {
-//    //TODO: - Why Type 'MainPageViewController' does not conform to protocol 'ItemDelegate'?
-//}
+extension MainPageViewController: ItemDelegate {
+    //TODO: - Why Type 'MainPageViewController' does not conform to protocol 'ItemDelegate'?
+}
 
 
