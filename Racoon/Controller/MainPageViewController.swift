@@ -50,7 +50,7 @@ class MainPageViewController: UIViewController {
         }) else {
             fatalError("CreateItemTableViewController not found")
         }
-        createItemVC.delegate = self
+//        createItemVC.delegate = self
         self.navigationController?.pushViewController(createItemVC, animated: true)
     }
     
@@ -77,7 +77,7 @@ class MainPageViewController: UIViewController {
     func configureSearchBar() {
         searchBar.placeholder = "Search"
         navigationItem.titleView = searchBar
-        searchBar.isHidden = true
+        searchBar.alpha = 0
         searchBar.showsCancelButton = true
     }
     
@@ -97,12 +97,18 @@ class MainPageViewController: UIViewController {
     }
     
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
-        searchBar.isHidden.toggle()
-        if searchBar.isHidden == true {
-            searchBar.text = ""
-            searchBar.resignFirstResponder()
+        if self.searchBar.alpha == 1 {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+                self.searchBar.alpha = 0
+            } completion: { bool in
+                self.searchBar.resignFirstResponder()
+            }
         } else {
-            searchBar.becomeFirstResponder()
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+                self.searchBar.alpha = 1
+            } completion: { bool in
+                self.searchBar.becomeFirstResponder()
+            }
         }
     }
 }
@@ -144,7 +150,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                 return EditItemTableViewController(coder: coder, selectedItem: selectedItem, indexPath: indexPath.row)
             })
             let navigationC = UINavigationController(rootViewController: editItemVC!)
-            editItemVC?.delegate = self
+//            editItemVC?.delegate = self
             self.showDetailViewController(navigationC, sender: self)
             complete(true)
         }
@@ -171,8 +177,8 @@ extension MainPageViewController: UISearchBarDelegate {
 }
 
 //MARK: - ItemDelegate
-extension MainPageViewController: ItemDelegate {
-    //TODO: - Why Type 'MainPageViewController' does not conform to protocol 'ItemDelegate'?
-}
+//extension MainPageViewController: ItemDelegate {
+//    //TODO: - Why Type 'MainPageViewController' does not conform to protocol 'ItemDelegate'?
+//}
 
 
