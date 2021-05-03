@@ -34,17 +34,18 @@ class AddStockViewController: UITableViewController {
     
     //MARK: - Selectors
     @objc func saveButtonTapped() {
-        // set the inventory property array of the item
-        guard let amount = Int(amountTextField.text ?? "\(0)") else { return }
-        var unit: Item.StockType {
-            switch unitSegment.selectedSegmentIndex {
-            case 0: return .package
-            case 1: return .piece
-            default: return .package
+        self.dismiss(animated: true) {
+            guard let amount = Int(self.amountTextField.text ?? "\(0)") else { return }
+            var unit: Item.StockType {
+                switch self.unitSegment.selectedSegmentIndex {
+                case 0: return .package
+                case 1: return .piece
+                default: return .package
+                }
             }
+            let newStock = Item.Stock(amount: amount, type: unit)
+            self.delegate?.item(addStockAt: self.selectedIndex!, newStock: newStock)
         }
-        let newStock = Item.Stock(amount: amount, type: unit)
-        delegate?.item(addStockAt: selectedIndex!, newStock: newStock)
     }
     
     @objc func cancelButtonTapped() {

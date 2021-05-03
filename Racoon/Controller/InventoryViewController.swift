@@ -7,18 +7,22 @@
 
 import UIKit
 
-class InventoryViewController: UIViewController, ItemDelegate {
+class InventoryViewController: UIViewController {
     
     var manager = ItemManager()
         
-    var selectedItem: Item
+    var selectedItem: Item {
+        get {
+            manager.dataArray[selectedIndex]
+        }
+    }
+    
     var selectedIndex: Int
     var isEditingStock: Bool = false
     var selectedStockIndex = 0
     var delegate: ItemDelegate?
     
     init?(coder: NSCoder, selectedItem: Item, selectedIndex: Int) {
-        self.selectedItem = selectedItem
         self.selectedIndex = selectedIndex
         super.init(coder: coder)
     }
@@ -79,10 +83,8 @@ extension InventoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //MARK: - Delete Swipe
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            //TODO: - make manager to delete it
-            self.selectedItem.inventory.remove(at: indexPath.row)
+            self.manager.deleteStock(at: self.selectedIndex, inventoryIndex: indexPath.row)
             self.detailtemTableView.deleteRows(at: [indexPath], with: .automatic)
-            print(self.selectedItem.inventory)
         }
         let actions = UISwipeActionsConfiguration(actions: [delete])
         return actions
@@ -101,5 +103,12 @@ extension InventoryViewController: UITableViewDataSource {
         cell.textLabel?.text = "\(inventory.amount)"
         cell.detailTextLabel?.text = "\(inventory.type)"
         return cell
+    }
+}
+
+extension InventoryViewController: ItemDelegate {
+    func item(addStockAt index: Int, newStock: Item.Stock) {
+        manager.addStock(at: index, newStock: newStock)
+        detailtemTableView.reloadData()
     }
 }

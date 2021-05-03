@@ -8,7 +8,10 @@
 import Foundation
 
 class ItemManager {
-    private (set) var dataArray: [Item] = []
+    private (set) var dataArray: [Item] = [Item(name: "1", packageQuantity: 1, unit: .kg),
+                                           Item(name: "2", packageQuantity: 2, unit: .kg),
+                                           Item(name: "3", packageQuantity: 3, unit: .piece),
+    ]
     
     func getData() -> [Item] {
         return dataArray
@@ -20,7 +23,6 @@ class ItemManager {
     
     func addItem(_ item: Item) {
         dataArray.append(item)
-        print("item added to data array, its now \(dataArray.count)")
     }
     
     func editItem(at index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
@@ -34,12 +36,15 @@ class ItemManager {
         dataArray[index].inventory[inventoryIndex].type = newType
     }
     
+    func deleteStock(at index: Int, inventoryIndex: Int) {
+        dataArray[index].inventory.remove(at: inventoryIndex)
+    }
+    
     func updateInventory(at index: Int, inventory: [Item.Stock]) {
         dataArray[index].inventory = inventory
     }
     
     func addStock(at index: Int, newStock: Item.Stock) {
-        print(dataArray)
         dataArray[index].inventory.append(newStock)
     }
 }
