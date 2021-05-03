@@ -31,27 +31,27 @@ extension ItemDelegate {
         return ItemManager()
     }
         
-    mutating func item(deleteItemAt index: Int) {
+    func item(deleteItemAt index: Int) {
         manager.deleteItem(at: index)
     }
 
-    mutating func item(addItem item: Item) {
+    func item(addItem item: Item) {
         manager.addItem(item)
     }
 
-    mutating func item(editItemAt index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
+    func item(editItemAt index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
         manager.editItem(at: index, name: name, packageQuantity: packageQuantity, unit: unit)
     }
 
-    mutating func item(editStockAt index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType) {
+    func item(editStockAt index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType) {
         manager.editStock(at: index, inventoryIndex: inventoryIndex, newStock: newStock, newType: newType)
     }
 
-    mutating func item(updateInventoryAt index: Int, inventory: [Item.Stock]) {
+    func item(updateInventoryAt index: Int, inventory: [Item.Stock]) {
         manager.updateInventory(at: index, inventory: inventory)
     }
 
-    mutating func item(addStockAt index: Int, newStock: Item.Stock) {
+    func item(addStockAt index: Int, newStock: Item.Stock) {
         manager.addStock(at: index, newStock: newStock)
     }
 }

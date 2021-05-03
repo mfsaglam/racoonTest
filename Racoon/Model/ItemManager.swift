@@ -7,37 +7,39 @@
 
 import Foundation
 
-struct ItemManager {
-    var dataArray: [Item] = []
+class ItemManager {
+    private (set) var dataArray: [Item] = []
     
     func getData() -> [Item] {
         return dataArray
     }
     
-    mutating func deleteItem(at index: Int) {
+    func deleteItem(at index: Int) {
         dataArray.remove(at: index)
     }
     
-    mutating func addItem(_ item: Item) {
+    func addItem(_ item: Item) {
         dataArray.append(item)
+        print("item added to data array, its now \(dataArray.count)")
     }
     
-    mutating func editItem(at index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
+    func editItem(at index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
         dataArray[index].name = name
         dataArray[index].packageQuantity = packageQuantity
         dataArray[index].unit = unit
     }
     
-    mutating func editStock(at index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType) {
+    func editStock(at index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType) {
         dataArray[index].inventory[inventoryIndex].amount = newStock
         dataArray[index].inventory[inventoryIndex].type = newType
     }
     
-    mutating func updateInventory(at index: Int, inventory: [Item.Stock]) {
+    func updateInventory(at index: Int, inventory: [Item.Stock]) {
         dataArray[index].inventory = inventory
     }
     
-    mutating func addStock(at index: Int, newStock: Item.Stock) {
+    func addStock(at index: Int, newStock: Item.Stock) {
+        print(dataArray)
         dataArray[index].inventory.append(newStock)
     }
 }

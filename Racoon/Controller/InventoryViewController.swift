@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InventoryViewController: UIViewController {
+class InventoryViewController: UIViewController, ItemDelegate {
     
     var manager = ItemManager()
         
@@ -54,14 +54,15 @@ class InventoryViewController: UIViewController {
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         //TODO: - This is not working!
-//        delegate?.item(updateInventoryWithNewInventory: selectedItem.inventory, indexPath: selectedIndex)
+        delegate?.item(updateInventoryAt: selectedIndex, inventory: selectedItem.inventory)
         navigationController?.popViewController(animated: true)
     }
     
     func configureInventoryVC() -> UIViewController {
         let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! AddStockViewController
         let navigationC = UINavigationController(rootViewController: inventoryVC)
-//        inventoryVC.delegate = self
+        inventoryVC.delegate = self
+        inventoryVC.selectedIndex = selectedIndex
         inventoryVC.navigationItem.title = self.isEditingStock ? "Edit Stock" : "Add Stock"
         return navigationC
     }

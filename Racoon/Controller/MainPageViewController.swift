@@ -50,7 +50,7 @@ class MainPageViewController: UIViewController {
         }) else {
             fatalError("CreateItemTableViewController not found")
         }
-//        createItemVC.delegate = self
+        createItemVC.delegate = self
         self.navigationController?.pushViewController(createItemVC, animated: true)
     }
     
@@ -150,7 +150,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                 return EditItemTableViewController(coder: coder, selectedItem: selectedItem, indexPath: indexPath.row)
             })
             let navigationC = UINavigationController(rootViewController: editItemVC!)
-//            editItemVC?.delegate = self
+            editItemVC?.delegate = self
             self.showDetailViewController(navigationC, sender: self)
             complete(true)
         }
@@ -178,7 +178,11 @@ extension MainPageViewController: UISearchBarDelegate {
 
 //MARK: - ItemDelegate
 extension MainPageViewController: ItemDelegate {
-    //TODO: - Why Type 'MainPageViewController' does not conform to protocol 'ItemDelegate'?
+    func item(addItem item: Item) {
+        manager.addItem(item)
+        print("data array now: \(manager.dataArray.count)")
+        items = dataArray
+    }
 }
 
 

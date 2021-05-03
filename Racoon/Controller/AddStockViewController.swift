@@ -10,6 +10,7 @@ import UIKit
 class AddStockViewController: UITableViewController {
     
     var delegate: ItemDelegate?
+    var selectedIndex: Int?
     
     @IBOutlet weak var unitSegment: UISegmentedControl!
     @IBOutlet weak var amountTextField: UITextField!
@@ -43,7 +44,7 @@ class AddStockViewController: UITableViewController {
             }
         }
         let newStock = Item.Stock(amount: amount, type: unit)
-//        delegate?.item(updateViewWithNewStock: newStock)
+        delegate?.item(addStockAt: selectedIndex!, newStock: newStock)
     }
     
     @objc func cancelButtonTapped() {
