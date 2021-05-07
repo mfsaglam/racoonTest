@@ -9,7 +9,7 @@ import UIKit
 
 class MainPageViewController: UIViewController {
     
-    var manager = ItemManager()
+    var manager = ItemManager.shared
     var dataArray: [Item] {
         get {
             manager.getData()
@@ -28,6 +28,7 @@ class MainPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        manager.addObserver(observer: self)
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         searchBar.delegate = self
@@ -129,7 +130,9 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         guard let countItemVC = self.storyboard?.instantiateViewController(identifier: "CountItemViewControllerID", creator: { coder in
-            return InventoryViewController(coder: coder, selectedItem: item, selectedIndex: indexPath.row)
+            let inventoryVC = InventoryViewController(coder: coder, selectedItem: item, selectedIndex: indexPath.row)
+            inventoryVC?.delegate = self
+            return inventoryVC
         }) else {
             fatalError("CountItemViewController not found")
         }
@@ -139,8 +142,8 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //MARK: - Delete Action
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
+//          TODO: - delegate here??
             manager.deleteItem(at: indexPath.row)
-            items = dataArray
             //tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         //MARK: - Edit Action
@@ -181,6 +184,16 @@ extension MainPageViewController: ItemDelegate {
     func item(addItem item: Item) {
         manager.addItem(item)
         print("data array now: \(manager.dataArray.count)")
+    }
+    
+    func item(updateInventoryAt index: Int, inventory: [Item.Stock]) {
+        manager.updateInventory(at: index, inventory: inventory)
+    }
+}
+
+//MARK: - ItemManagerObserver
+extension MainPageViewController: ItemManagerObserver {
+    func didUpdateDataArray(to dataArray: [Item]) {
         items = dataArray
     }
 }

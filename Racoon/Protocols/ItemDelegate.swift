@@ -30,7 +30,7 @@ extension ItemDelegate {
     //TODO: - I gave default implementations but these functions are still required by the class who conforms them. Why?
     
     var manager: ItemManager {
-        return ItemManager()
+        ItemManager.shared
     }
         
     func item(deleteItemAt index: Int) {

@@ -7,11 +7,31 @@
 
 import Foundation
 
+protocol ItemManagerObserver {
+    func didUpdateDataArray(to dataArray: [Item])
+}
+
 class ItemManager {
+    
+    var observers = [ItemManagerObserver]()
+    
+    static let shared = ItemManager.init()
+    private init() { }
+    
     private (set) var dataArray: [Item] = [Item(name: "1", packageQuantity: 1, unit: .kg),
                                            Item(name: "2", packageQuantity: 2, unit: .kg),
                                            Item(name: "3", packageQuantity: 3, unit: .piece),
-    ]
+    ] {
+        didSet {
+            observers.forEach { observer in
+                observer.didUpdateDataArray(to: dataArray)
+            }
+        }
+    }
+    
+    func addObserver(observer: ItemManagerObserver) {
+        observers.append(observer)
+    }
     
     func getData() -> [Item] {
         return dataArray

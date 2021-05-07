@@ -9,7 +9,7 @@ import UIKit
 
 class InventoryViewController: UIViewController {
     
-    var manager = ItemManager()
+    var manager = ItemManager.shared
         
     var selectedItem: Item {
         get {
