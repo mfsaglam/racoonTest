@@ -23,6 +23,8 @@ protocol ItemDelegate {
     func item(updateInventoryAt index: Int, inventory: [Item.Stock])
 
     func item(addStockAt index: Int, newStock: Item.Stock)
+    
+    func resetInventory()
 }
 
 extension ItemDelegate {
@@ -59,5 +61,9 @@ extension ItemDelegate {
 
     func item(addStockAt index: Int, newStock: Item.Stock) {
         manager.addStock(at: index, newStock: newStock)
+    }
+    
+    func resetInventory() {
+        manager.resetInventory()
     }
 }

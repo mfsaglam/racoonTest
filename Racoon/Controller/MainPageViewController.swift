@@ -22,7 +22,6 @@ class MainPageViewController: UIViewController {
     }
     
     let searchBar = UISearchBar(frame: CGRect.zero)
-    @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var itemsTableView: UITableView!
     @IBOutlet weak var segmentedSwitch: UISegmentedControl!
     
@@ -37,12 +36,25 @@ class MainPageViewController: UIViewController {
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
         view.addGestureRecognizer(tapGestureRecognizer)
         tapGestureRecognizer.cancelsTouchesInView = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItem))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItem))
+        let resetButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleReset))
+        navigationItem.rightBarButtonItems = [addButton, resetButton]
     }
     
 // MARK: - Selectors
     @objc func dismissKeyboard() {
         searchBar.resignFirstResponder()
+    }
+    
+    @objc func handleReset() {
+        let alert = UIAlertController(title: "Do you want to reset all Items?", message: "This action can not be undone.", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { action in
+            self.manager.resetInventory()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            return
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func handleAddItem() {

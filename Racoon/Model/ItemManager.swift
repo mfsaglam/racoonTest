@@ -67,4 +67,8 @@ class ItemManager {
     func addStock(at index: Int, newStock: Item.Stock) {
         dataArray[index].inventory.append(newStock)
     }
+    
+    func resetInventory() {
+        //reset the inventory here
+    }
 }
