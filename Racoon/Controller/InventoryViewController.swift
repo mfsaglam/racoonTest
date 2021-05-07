@@ -44,6 +44,11 @@ class InventoryViewController: UIViewController {
         saveButton.layer.cornerRadius = saveButton.frame.size.height / 2
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        ItemManager.shared.observers.removeAll(where: { $0 is InventoryViewController })
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = selectedItem.name
@@ -57,7 +62,6 @@ class InventoryViewController: UIViewController {
     
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        //TODO: - This is not working!
         delegate?.item(updateInventoryAt: selectedIndex, inventory: selectedItem.inventory)
         navigationController?.popViewController(animated: true)
     }

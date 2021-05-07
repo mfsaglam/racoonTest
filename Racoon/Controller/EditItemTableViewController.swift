@@ -49,14 +49,16 @@ class EditItemTableViewController: UITableViewController {
     }
     
     @objc func doneSelected() {
-        guard let newName = nameTextField.text, let newQuantity = Int(quantityTextField.text!)
-        else {
-            //TODO: - Handle error
-            return
+        self.dismiss(animated: true) {
+            guard let newName = self.nameTextField.text, let newQuantity = Int(self.quantityTextField.text!)
+            else {
+                //TODO: - Handle error
+                return
+            }
+            var newUnit: Item.Unit {
+                self.unitSegment.selectedSegmentIndex == 0 ? .kg : .piece
+            }
+            self.delegate?.item(editItemAt: self.selectedIndex, name: newName, packageQuantity: newQuantity, unit: newUnit)
         }
-        var newUnit: Item.Unit {
-            unitSegment.selectedSegmentIndex == 0 ? .kg : .piece
-        }
-        delegate?.item(editItemAt: selectedIndex, name: newName, packageQuantity: newQuantity, unit: newUnit)
     }
 }
