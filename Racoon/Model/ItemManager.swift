@@ -70,5 +70,8 @@ class ItemManager {
     
     func resetInventory() {
         //reset the inventory here
+        for index in 0..<dataArray.count {
+            dataArray[index].inventory = []
+        }
     }
 }

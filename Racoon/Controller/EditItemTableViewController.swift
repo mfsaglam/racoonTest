@@ -56,7 +56,7 @@ class EditItemTableViewController: UITableViewController {
                 return
             }
             var newUnit: Item.Unit {
-                self.unitSegment.selectedSegmentIndex == 0 ? .kg : .piece
+                self.unitSegment.selectedSegmentIndex == 0 ? .piece : .kg
             }
             self.delegate?.item(editItemAt: self.selectedIndex, name: newName, packageQuantity: newQuantity, unit: newUnit)
         }
