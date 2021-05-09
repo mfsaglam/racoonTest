@@ -17,7 +17,11 @@ class MainPageViewController: UIViewController {
     }
     var items: [Item] = [] {
         didSet {
-            itemsTableView.reloadData()
+            if oldValue.count == items.count {
+                itemsTableView.reloadData()
+            } else {
+                return
+            }
         }
     }
     
@@ -47,7 +51,7 @@ class MainPageViewController: UIViewController {
     }
     
     @objc func handleReset() {
-        let alert = UIAlertController(title: "Do you want to reset all Items?", message: "This action can not be undone.", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { action in
             self.manager.resetInventory()
         }))
@@ -154,9 +158,15 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //MARK: - Delete Action
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
-//          TODO: - delegate here??
-            manager.deleteItem(at: indexPath.row)
-            //tableView.deleteRows(at: [indexPath], with: .automatic)
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                manager.deleteItem(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                tableView.reloadRows(at: [indexPath], with: .right)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
         //MARK: - Edit Action
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, complete) in
@@ -195,11 +205,7 @@ extension MainPageViewController: UISearchBarDelegate {
 extension MainPageViewController: ItemDelegate {
     func item(addItem item: Item) {
         manager.addItem(item)
-        print("data array now: \(manager.dataArray.count)")
-    }
-    
-    func item(updateInventoryAt index: Int, inventory: [Item.Stock]) {
-        manager.updateInventory(at: index, inventory: inventory)
+        itemsTableView.reloadData()
     }
 }
 
