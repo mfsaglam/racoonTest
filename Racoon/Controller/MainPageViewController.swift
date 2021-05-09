@@ -17,10 +17,8 @@ class MainPageViewController: UIViewController {
     }
     var items: [Item] = [] {
         didSet {
-            if oldValue.count == items.count {
-                itemsTableView.reloadData()
-            } else {
-                return
+            DispatchQueue.main.async {
+                self.itemsTableView.reloadData()
             }
         }
     }
@@ -52,7 +50,7 @@ class MainPageViewController: UIViewController {
     
     @objc func handleReset() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { action in
+        alert.addAction(UIAlertAction(title: "Reset All", style: .destructive, handler: { action in
             self.manager.resetInventory()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
@@ -78,7 +76,6 @@ class MainPageViewController: UIViewController {
             let searchString = query.capitalized
             let searchedItems = dataArray.filter { $0.name.contains(searchString) }
             switch segmentedSwitch.selectedSegmentIndex {
-            //TODO: - Solve the issue with edited items
             case 0:
                 items = searchedItems
             case 1:
