@@ -10,12 +10,12 @@ import UIKit
 class MainPageViewController: UIViewController {
     
     var manager = ItemManager.shared
-    var dataArray: [Item] {
+    var items: [Item] {
         get {
             manager.getData()
         }
     }
-    var items: [Item] = [] {
+    var filteredItems: [Item] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.itemsTableView.reloadData()
@@ -23,7 +23,24 @@ class MainPageViewController: UIViewController {
         }
     }
     
-    let searchBar = UISearchBar(frame: CGRect.zero)
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
+    
+//    let searchBar = UISearchBar(frame: CGRect.zero)
+    
+    //MARK: - UISearchController's Parameters
+    let searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Items"
+        return searchController
+    }()
+    
     @IBOutlet weak var itemsTableView: UITableView!
     @IBOutlet weak var segmentedSwitch: UISegmentedControl!
     
@@ -32,21 +49,25 @@ class MainPageViewController: UIViewController {
         manager.addObserver(observer: self)
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
-        searchBar.delegate = self
-        configureSearchBar()
-        updateTableView(with: "")
-        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
-        view.addGestureRecognizer(tapGestureRecognizer)
-        tapGestureRecognizer.cancelsTouchesInView = false
+//        searchBar.delegate = self
+//        configureSearchBar()
+        //MARK: - UISearchController's parameters at viewDidLoad
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        updateTableView("")
+//        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
+//        view.addGestureRecognizer(tapGestureRecognizer)
+//        tapGestureRecognizer.cancelsTouchesInView = false
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItem))
         let resetButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleReset))
         navigationItem.rightBarButtonItems = [addButton, resetButton]
     }
     
 // MARK: - Selectors
-    @objc func dismissKeyboard() {
-        searchBar.resignFirstResponder()
-    }
+//    @objc func dismissKeyboard() {
+//        searchBar.resignFirstResponder()
+//    }
     
     @objc func handleReset() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -69,79 +90,96 @@ class MainPageViewController: UIViewController {
         self.navigationController?.pushViewController(createItemVC, animated: true)
     }
     
-    func updateTableView(with query: String) {
-        if searchBar.text?.count == 0 {
-            items = dataArray
-        } else {
-            let searchString = query.capitalized
-            let searchedItems = dataArray.filter { $0.name.contains(searchString) }
-            switch segmentedSwitch.selectedSegmentIndex {
-            case 0:
-                items = searchedItems
-            case 1:
-                items = searchedItems.filter { $0.totalStock != 0 }
-            case 2:
-                items = searchedItems.filter { $0.totalStock == 0 }
-            default:
-                items = searchedItems
-            }
+    func updateTableView(_ searchText: String) {
+//        if searchBar.text?.count == 0 {
+//            filteredItems = items
+//        } else {
+//            let searchString = query.capitalized
+//            let searchedItems = items.filter { $0.name.contains(searchString) }
+//            switch segmentedSwitch.selectedSegmentIndex {
+//            case 0:
+//                filteredItems = searchedItems
+//            case 1:
+//                filteredItems = searchedItems.filter { $0.totalStock != 0 }
+//            case 2:
+//                filteredItems = searchedItems.filter { $0.totalStock == 0 }
+//            default:
+//                filteredItems = searchedItems
+//            }
+//        }
+        filteredItems = items.filter { (item: Item) -> Bool in
+            return item.name.lowercased().contains(searchText.lowercased())
         }
     }
     
-    func configureSearchBar() {
-        searchBar.placeholder = "Search"
-        navigationItem.titleView = searchBar
-        searchBar.alpha = 0
-        searchBar.showsCancelButton = true
-    }
+//    func configureSearchBar() {
+//        searchBar.placeholder = "Search"
+//        navigationItem.titleView = searchBar
+//        searchBar.alpha = 0
+//        searchBar.showsCancelButton = true
+//    }
     
-    @IBAction func segmentSelected(_ sender: UISegmentedControl) {
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        switch segmentedSwitch.selectedSegmentIndex {
-        case 0:
-            items = dataArray
-        case 1:
-            items = dataArray.filter { $0.totalStock != 0 }
-        case 2:
-            items = dataArray.filter { $0.totalStock == 0 }
-        default:
-            items = dataArray
-        }
-    }
+//    @IBAction func segmentSelected(_ sender: UISegmentedControl) {
+//        searchBar.text = ""
+//        searchBar.resignFirstResponder()
+//        switch segmentedSwitch.selectedSegmentIndex {
+//        case 0:
+//            filteredItems = items
+//        case 1:
+//            filteredItems = items.filter { $0.totalStock != 0 }
+//        case 2:
+//            filteredItems = items.filter { $0.totalStock == 0 }
+//        default:
+//            filteredItems = items
+//        }
+//    }
     
-    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
-        if self.searchBar.alpha == 1 {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-                self.searchBar.alpha = 0
-            } completion: { bool in
-                self.searchBar.resignFirstResponder()
-            }
-        } else {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-                self.searchBar.alpha = 1
-            } completion: { bool in
-                self.searchBar.becomeFirstResponder()
-            }
-        }
-    }
+//    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+//        if self.searchBar.alpha == 1 {
+//            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+//                self.searchBar.alpha = 0
+//            } completion: { bool in
+//                self.searchBar.resignFirstResponder()
+//            }
+//        } else {
+//            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+//                self.searchBar.alpha = 1
+//            } completion: { bool in
+//                self.searchBar.becomeFirstResponder()
+//            }
+//        }
+//    }
 }
 
 //MARK: - UITableView Delegate and DataSource
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredItems.count
+        }
         return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
-        cell.textLabel?.text = items[indexPath.row].name
-        cell.detailTextLabel?.text = "\(items[indexPath.row].totalStock) \(items[indexPath.row].unit)"
+        let item: Item
+        if isFiltering {
+            item = filteredItems[indexPath.row]
+        } else {
+            item = items[indexPath.row]
+        }
+        cell.textLabel?.text = item.name
+        cell.detailTextLabel?.text = "\(item.totalStock) \(item.unit)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = items[indexPath.row]
+        let item: Item
+        if isFiltering {
+            item = filteredItems[indexPath.row]
+        } else {
+            item = items[indexPath.row]
+        }
         guard let countItemVC = self.storyboard?.instantiateViewController(identifier: "CountItemViewControllerID", creator: { coder in
             let inventoryVC = InventoryViewController(coder: coder, selectedItem: item, selectedIndex: indexPath.row)
             inventoryVC?.delegate = self
@@ -167,7 +205,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
         //MARK: - Edit Action
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, complete) in
-            let selectedItem = self.items[indexPath.row]
+            let selectedItem = self.filteredItems[indexPath.row]
             let editItemVC = self.storyboard?.instantiateViewController(identifier: "EditItemTableViewControllerID", creator: { coder in
                 return EditItemTableViewController(coder: coder, selectedItem: selectedItem, indexPath: indexPath.row)
             })
@@ -184,19 +222,19 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 //MARK: - UISearchBar Delegate
-extension MainPageViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        updateTableView(with: "")
-        searchBar.resignFirstResponder()
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        segmentedSwitch.selectedSegmentIndex = 0
-        itemsTableView.reloadData()
-        updateTableView(with: searchText)
-    }
-}
+//extension MainPageViewController: UISearchBarDelegate {
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.text = ""
+//        updateTableView(with: "")
+//        searchBar.resignFirstResponder()
+//    }
+//
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        segmentedSwitch.selectedSegmentIndex = 0
+//        itemsTableView.reloadData()
+//        updateTableView(with: searchText)
+//    }
+//}
 
 //MARK: - ItemDelegate
 extension MainPageViewController: ItemDelegate {
@@ -209,7 +247,16 @@ extension MainPageViewController: ItemDelegate {
 //MARK: - ItemManagerObserver
 extension MainPageViewController: ItemManagerObserver {
     func didUpdateDataArray(to dataArray: [Item]) {
-        items = dataArray
+        filteredItems = dataArray
+    }
+}
+
+//https://www.raywenderlich.com/4363809-uisearchcontroller-tutorial-getting-started
+//MARK: - UISearchResultsUpdating
+extension MainPageViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        updateTableView(searchBar.text!)
     }
 }
 

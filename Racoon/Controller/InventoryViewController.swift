@@ -11,11 +11,7 @@ class InventoryViewController: UIViewController {
     
     var manager = ItemManager.shared
         
-    var selectedItem: Item {
-        get {
-            manager.dataArray[selectedIndex]
-        }
-    }
+    var selectedItem: Item
     
     var selectedIndex: Int
     var isEditingStock: Bool = false
@@ -23,6 +19,7 @@ class InventoryViewController: UIViewController {
     var delegate: ItemDelegate?
     
     init?(coder: NSCoder, selectedItem: Item, selectedIndex: Int) {
+        self.selectedItem = selectedItem
         self.selectedIndex = selectedIndex
         super.init(coder: coder)
     }
