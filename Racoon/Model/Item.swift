@@ -8,9 +8,33 @@
 import Foundation
 
 struct Item {
+    
     var name: String
     var packageQuantity: Int
     var unit: Item.Unit
+    var inventory: [Stock] = []
+    
+    struct Stock {
+        var amount: Int
+        var type: Item.StockType
+    }
+    
+    enum StockType {
+        case package, piece
+    }
+    
+    enum Unit {
+        case kg, piece
+    }
+    
+    enum Category {
+        case all, zero, counted
+    }
+    
+    var category: Item.Category {
+        self.inventory.count == 0 ? .zero : .counted
+    }
+    
     var totalStock: Int {
         var totalStock = 0
         for stock in inventory {
@@ -22,22 +46,31 @@ struct Item {
         }
         return totalStock
     }
-    var inventory: [Stock] = []
+}
+
+extension Item.Category: CaseIterable { }
+
+extension Item.Category: RawRepresentable {
+    typealias RawValue = String
     
-    enum StockType {
-        case package
-        case piece
+    init?(rawValue: RawValue) {
+      switch rawValue {
+      case "All": self = .all
+      case "Zero": self = .zero
+      case "Counted": self = .counted
+      default: return nil
+      }
     }
     
-    struct Stock {
-        var amount: Int
-        var type: Item.StockType
+    var rawValue: RawValue {
+      switch self {
+      case .all: return "All"
+      case .zero: return "Zero"
+      case .counted: return "Counted"
+      }
     }
     
-    enum Unit {
-        case kg
-        case piece
-    }
+    
 }
 
 

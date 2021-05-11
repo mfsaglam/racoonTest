@@ -28,10 +28,9 @@ class MainPageViewController: UIViewController {
     }
     
     var isFiltering: Bool {
-        return searchController.isActive && !isSearchBarEmpty
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return searchController.isActive && (!isSearchBarEmpty || searchBarScopeIsFiltering)
     }
-    
-//    let searchBar = UISearchBar(frame: CGRect.zero)
     
     //MARK: - UISearchController's Parameters
     let searchController: UISearchController = {
@@ -49,25 +48,21 @@ class MainPageViewController: UIViewController {
         manager.addObserver(observer: self)
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
-//        searchBar.delegate = self
-//        configureSearchBar()
         //MARK: - UISearchController's parameters at viewDidLoad
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        updateTableView("")
-//        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPageViewController.dismissKeyboard))
-//        view.addGestureRecognizer(tapGestureRecognizer)
-//        tapGestureRecognizer.cancelsTouchesInView = false
+        filterContentForSearchText("")
+        searchController.searchBar.scopeButtonTitles = Item.Category.allCases.map { $0.rawValue }
+        searchController.searchBar.delegate = self
+
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItem))
         let resetButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleReset))
-        navigationItem.rightBarButtonItems = [addButton, resetButton]
+        navigationItem.rightBarButtonItem = addButton
+        navigationItem.leftBarButtonItem = resetButton
     }
     
 // MARK: - Selectors
-//    @objc func dismissKeyboard() {
-//        searchBar.resignFirstResponder()
-//    }
     
     @objc func handleReset() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -90,65 +85,18 @@ class MainPageViewController: UIViewController {
         self.navigationController?.pushViewController(createItemVC, animated: true)
     }
     
-    func updateTableView(_ searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            filteredItems = items
-//        } else {
-//            let searchString = query.capitalized
-//            let searchedItems = items.filter { $0.name.contains(searchString) }
-//            switch segmentedSwitch.selectedSegmentIndex {
-//            case 0:
-//                filteredItems = searchedItems
-//            case 1:
-//                filteredItems = searchedItems.filter { $0.totalStock != 0 }
-//            case 2:
-//                filteredItems = searchedItems.filter { $0.totalStock == 0 }
-//            default:
-//                filteredItems = searchedItems
-//            }
-//        }
+    func filterContentForSearchText(_ searchText: String, category: Item.Category? = nil) {
         filteredItems = items.filter { (item: Item) -> Bool in
-            return item.name.lowercased().contains(searchText.lowercased())
+            let doesCategoryMatch = category == .all || item.category == category
+            
+            if isSearchBarEmpty {
+                return doesCategoryMatch
+            } else {
+                return doesCategoryMatch && item.name.lowercased()
+                    .contains(searchText.lowercased())
+            }
         }
     }
-    
-//    func configureSearchBar() {
-//        searchBar.placeholder = "Search"
-//        navigationItem.titleView = searchBar
-//        searchBar.alpha = 0
-//        searchBar.showsCancelButton = true
-//    }
-    
-//    @IBAction func segmentSelected(_ sender: UISegmentedControl) {
-//        searchBar.text = ""
-//        searchBar.resignFirstResponder()
-//        switch segmentedSwitch.selectedSegmentIndex {
-//        case 0:
-//            filteredItems = items
-//        case 1:
-//            filteredItems = items.filter { $0.totalStock != 0 }
-//        case 2:
-//            filteredItems = items.filter { $0.totalStock == 0 }
-//        default:
-//            filteredItems = items
-//        }
-//    }
-    
-//    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
-//        if self.searchBar.alpha == 1 {
-//            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-//                self.searchBar.alpha = 0
-//            } completion: { bool in
-//                self.searchBar.resignFirstResponder()
-//            }
-//        } else {
-//            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-//                self.searchBar.alpha = 1
-//            } completion: { bool in
-//                self.searchBar.becomeFirstResponder()
-//            }
-//        }
-//    }
 }
 
 //MARK: - UITableView Delegate and DataSource
@@ -221,21 +169,6 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: - UISearchBar Delegate
-//extension MainPageViewController: UISearchBarDelegate {
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.text = ""
-//        updateTableView(with: "")
-//        searchBar.resignFirstResponder()
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        segmentedSwitch.selectedSegmentIndex = 0
-//        itemsTableView.reloadData()
-//        updateTableView(with: searchText)
-//    }
-//}
-
 //MARK: - ItemDelegate
 extension MainPageViewController: ItemDelegate {
     func item(addItem item: Item) {
@@ -256,8 +189,18 @@ extension MainPageViewController: ItemManagerObserver {
 extension MainPageViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        updateTableView(searchBar.text!)
+          let category = Item.Category(rawValue: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
+          filterContentForSearchText(searchBar.text!, category: category)
     }
 }
+
+extension MainPageViewController: UISearchBarDelegate {
+  func searchBar(_ searchBar: UISearchBar,
+      selectedScopeButtonIndexDidChange selectedScope: Int) {
+    let category = Item.Category(rawValue: searchBar.scopeButtonTitles![selectedScope])
+    filterContentForSearchText(searchBar.text!, category: category)
+  }
+}
+
 
 
