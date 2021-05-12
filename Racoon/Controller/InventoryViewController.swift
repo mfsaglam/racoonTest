@@ -11,7 +11,11 @@ class InventoryViewController: UIViewController {
     
     var manager = ItemManager.shared
         
-    var selectedItem: Item
+    var selectedItem: Item {
+        didSet {
+            detailtemTableView.reloadData()
+        }
+    }
     
     var selectedIndex: Int
     var isEditingStock: Bool = false
@@ -30,15 +34,13 @@ class InventoryViewController: UIViewController {
 
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var detailtemTableView: UITableView!
-    @IBOutlet weak var saveButton: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         detailtemTableView.delegate = self
         detailtemTableView.dataSource = self
-        
-        saveButton.layer.cornerRadius = saveButton.frame.size.height / 2
+        manager.addObserver(observer: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,12 +57,6 @@ class InventoryViewController: UIViewController {
         isEditingStock = false
         self.showDetailViewController(configureInventoryVC(), sender: self)
         detailtemTableView.reloadData()
-    }
-    
-    
-    @IBAction func saveButtonPressed(_ sender: UIButton) {
-        delegate?.item(updateInventoryAt: selectedIndex, inventory: selectedItem.inventory)
-        navigationController?.popViewController(animated: true)
     }
     
     func configureInventoryVC() -> UIViewController {
@@ -107,9 +103,12 @@ extension InventoryViewController: UITableViewDataSource {
     }
 }
 
-extension InventoryViewController: ItemDelegate {
-    func item(addStockAt index: Int, newStock: Item.Stock) {
-        manager.addStock(at: index, newStock: newStock)
-        detailtemTableView.reloadData()
+//MARK: - ItemDelegate
+extension InventoryViewController: ItemDelegate { }
+
+//MARK: - ItemManagerObserver
+extension InventoryViewController: ItemManagerObserver {
+    func didUpdateDataArray(to dataArray: [Item]) {
+        selectedItem = dataArray[selectedIndex]
     }
 }

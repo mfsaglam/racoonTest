@@ -70,8 +70,8 @@
 				1260782D2613916600A63FD0 /* MainPageViewController.swift */,
 				12F2002D26231DFC00A4EAC7 /* CreateItemTableViewController.swift */,
 				1260784926139DEA00A63FD0 /* InventoryViewController.swift */,
-				12BF00CC26350D0A00DFE779 /* EditItemTableViewController.swift */,
 				1202ED27262FC6C200F9E9AA /* AddStockViewController.swift */,
+				12BF00CC26350D0A00DFE779 /* EditItemTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
