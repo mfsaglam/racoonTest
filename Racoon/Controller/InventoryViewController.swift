@@ -10,10 +10,12 @@ import UIKit
 class InventoryViewController: UIViewController {
     
     var manager = ItemManager.shared
-        
+    
     var selectedItem: Item {
         didSet {
-            detailtemTableView.reloadData()
+            DispatchQueue.main.async {
+                self.detailtemTableView.reloadData()
+            }
         }
     }
     
@@ -31,7 +33,7 @@ class InventoryViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("You must create this view controller with an item.")
     }
-
+    
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var detailtemTableView: UITableView!
     
