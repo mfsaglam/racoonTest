@@ -57,16 +57,16 @@ class InventoryViewController: UIViewController {
     
     @IBAction func addButtonPressed(_ sender: Any) {
         isEditingStock = false
-        self.showDetailViewController(configureAddStockVC(), sender: self)
+        self.showDetailViewController(configureAddStockVC(selectedIndex: selectedIndex), sender: self)
         detailtemTableView.reloadData()
     }
     
-    func configureAddStockVC(inventoryIndex: Int? = nil, selectedIndex: Int? = nil) -> UIViewController {
+    func configureAddStockVC(inventoryIndex: Int? = nil, selectedIndex: Int) -> UIViewController {
         let addStockVC = storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
-            if inventoryIndex != nil && selectedIndex != nil {
+            if inventoryIndex != nil {
                 return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, inventoryIndex: inventoryIndex, selectedIndex: selectedIndex)
             } else {
-                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock)
+                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, selectedIndex: selectedIndex)
             }
         }
         let navigationC = UINavigationController(rootViewController: addStockVC!)
@@ -80,7 +80,7 @@ extension InventoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.isEditingStock = true
         self.selectedStockIndex = indexPath.row
-        self.showDetailViewController(configureAddStockVC(), sender: self)
+        self.showDetailViewController(configureAddStockVC(selectedIndex: selectedIndex), sender: self)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

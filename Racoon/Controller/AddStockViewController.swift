@@ -12,9 +12,9 @@ class AddStockViewController: UITableViewController {
     var delegate: ItemDelegate?
     var isEditingStock: Bool
     var inventoryIndex: Int?
-    var selectedIndex: Int?
+    var selectedIndex: Int
     
-    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int? = nil, selectedIndex: Int? = nil) {
+    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int? = nil, selectedIndex: Int) {
         self.isEditingStock = isEditingStock
         self.inventoryIndex = inventoryIndex
         self.selectedIndex = selectedIndex
@@ -58,9 +58,9 @@ class AddStockViewController: UITableViewController {
             }
             let newStock = Item.Stock(amount: amount, type: unit)
             if self.isEditingStock {
-                self.delegate?.item(editStockAt: self.selectedIndex!, inventoryIndex: self.inventoryIndex!, newStock: newStock)
+                self.delegate?.item(editStockAt: self.selectedIndex, inventoryIndex: self.inventoryIndex!, newStock: newStock)
             } else {
-                self.delegate?.item(addStockAt: self.selectedIndex!, newStock: newStock)
+                self.delegate?.item(addStockAt: self.selectedIndex, newStock: newStock)
             }
         }
     }
