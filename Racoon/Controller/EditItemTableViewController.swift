@@ -50,7 +50,7 @@ class EditItemTableViewController: UITableViewController {
     
     @objc func doneSelected() {
         self.dismiss(animated: true) {
-            guard let newName = self.nameTextField.text, let newQuantity = Int(self.quantityTextField.text!)
+            guard let newName = self.nameTextField.text, let newQuantity = Float(self.quantityTextField.text!)
             else {
                 //TODO: - Handle error
                 return

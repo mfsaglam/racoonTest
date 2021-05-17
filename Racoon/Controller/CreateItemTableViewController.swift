@@ -28,7 +28,7 @@ class CreateItemTableViewController: UITableViewController {
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
-        guard let itemName = nameTextField.text, let packQuantity = Int(quantityTextField.text!) else {
+        guard let itemName = nameTextField.text, let packQuantity = Float(quantityTextField.text!) else {
             let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
                 return
             }

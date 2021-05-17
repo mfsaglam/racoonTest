@@ -10,12 +10,12 @@ import Foundation
 struct Item {
     
     var name: String
-    var packageQuantity: Int
+    var packageQuantity: Float
     var unit: Item.Unit
     var inventory: [Stock] = []
     
     struct Stock {
-        var amount: Int
+        var amount: Float
         var type: Item.StockType
     }
     
@@ -35,8 +35,8 @@ struct Item {
         self.inventory.count == 0 ? .zero : .counted
     }
     
-    var totalStock: Int {
-        var totalStock = 0
+    var totalStock: Float {
+        var totalStock: Float = 0
         for stock in inventory {
             if stock.type == .package {
                 totalStock += stock.amount * packageQuantity

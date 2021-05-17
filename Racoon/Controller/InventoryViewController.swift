@@ -57,16 +57,20 @@ class InventoryViewController: UIViewController {
     
     @IBAction func addButtonPressed(_ sender: Any) {
         isEditingStock = false
-        self.showDetailViewController(configureInventoryVC(), sender: self)
+        self.showDetailViewController(configureAddStockVC(), sender: self)
         detailtemTableView.reloadData()
     }
     
-    func configureInventoryVC() -> UIViewController {
-        let inventoryVC = storyboard?.instantiateViewController(identifier: "InventoryControllerID") as! AddStockViewController
-        let navigationC = UINavigationController(rootViewController: inventoryVC)
-        inventoryVC.delegate = self
-        inventoryVC.selectedIndex = selectedIndex
-        inventoryVC.navigationItem.title = self.isEditingStock ? "Edit Stock" : "Add Stock"
+    func configureAddStockVC(inventoryIndex: Int? = nil, selectedIndex: Int? = nil) -> UIViewController {
+        let addStockVC = storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
+            if inventoryIndex != nil && selectedIndex != nil {
+                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, inventoryIndex: inventoryIndex, selectedIndex: selectedIndex)
+            } else {
+                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock)
+            }
+        }
+        let navigationC = UINavigationController(rootViewController: addStockVC!)
+        addStockVC!.navigationItem.title = self.isEditingStock ? "Edit Stock" : "Add Stock"
         return navigationC
     }
 }
@@ -76,7 +80,7 @@ extension InventoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.isEditingStock = true
         self.selectedStockIndex = indexPath.row
-        self.showDetailViewController(configureInventoryVC(), sender: self)
+        self.showDetailViewController(configureAddStockVC(), sender: self)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

@@ -10,7 +10,20 @@ import UIKit
 class AddStockViewController: UITableViewController {
     
     var delegate: ItemDelegate?
+    var isEditingStock: Bool
+    var inventoryIndex: Int?
     var selectedIndex: Int?
+    
+    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int? = nil, selectedIndex: Int? = nil) {
+        self.isEditingStock = isEditingStock
+        self.inventoryIndex = inventoryIndex
+        self.selectedIndex = selectedIndex
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("You must create this viewController with these properties: isEditingStock, inventoryIndex and selectedIndex")
+    }
     
     @IBOutlet weak var unitSegment: UISegmentedControl!
     @IBOutlet weak var amountTextField: UITextField!
@@ -35,7 +48,7 @@ class AddStockViewController: UITableViewController {
     //MARK: - Selectors
     @objc func saveButtonTapped() {
         self.dismiss(animated: true) {
-            guard let amount = Int(self.amountTextField.text ?? "\(0)") else { return }
+            guard let amount = Float(self.amountTextField.text ?? "\(0)") else { return }
             var unit: Item.StockType {
                 switch self.unitSegment.selectedSegmentIndex {
                 case 0: return .package
@@ -44,7 +57,11 @@ class AddStockViewController: UITableViewController {
                 }
             }
             let newStock = Item.Stock(amount: amount, type: unit)
-            self.delegate?.item(addStockAt: self.selectedIndex!, newStock: newStock)
+            if self.isEditingStock {
+                self.delegate?.item(editStockAt: self.selectedIndex!, inventoryIndex: self.inventoryIndex!, newStock: newStock)
+            } else {
+                self.delegate?.item(addStockAt: self.selectedIndex!, newStock: newStock)
+            }
         }
     }
     

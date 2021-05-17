@@ -14,9 +14,9 @@ protocol ItemDelegate {
 
     func item(addItem item: Item)
 
-    func item(editItemAt index: Int, name: String, packageQuantity: Int, unit: Item.Unit)
+    func item(editItemAt index: Int, name: String, packageQuantity: Float, unit: Item.Unit)
 
-    func item(editStockAt index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType)
+    func item(editStockAt index: Int, inventoryIndex: Int, newStock: Item.Stock)
     
     func item(deleteStockAt index: Int, inventoryIndex: Int)
 
@@ -43,12 +43,12 @@ extension ItemDelegate {
         manager.addItem(item)
     }
 
-    func item(editItemAt index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
+    func item(editItemAt index: Int, name: String, packageQuantity: Float, unit: Item.Unit) {
         manager.editItem(at: index, name: name, packageQuantity: packageQuantity, unit: unit)
     }
 
-    func item(editStockAt index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType) {
-        manager.editStock(at: index, inventoryIndex: inventoryIndex, newStock: newStock, newType: newType)
+    func item(editStockAt index: Int, inventoryIndex: Int, newStock: Item.Stock) {
+        manager.editStock(at: index, inventoryIndex: inventoryIndex, newStock: newStock)
     }
     
     func item(deleteStockAt index: Int, inventoryIndex: Int) {

@@ -45,15 +45,14 @@ class ItemManager {
         dataArray.append(item)
     }
     
-    func editItem(at index: Int, name: String, packageQuantity: Int, unit: Item.Unit) {
+    func editItem(at index: Int, name: String, packageQuantity: Float, unit: Item.Unit) {
         dataArray[index].name = name
         dataArray[index].packageQuantity = packageQuantity
         dataArray[index].unit = unit
     }
     
-    func editStock(at index: Int, inventoryIndex: Int, newStock: Int, newType: Item.StockType) {
-        dataArray[index].inventory[inventoryIndex].amount = newStock
-        dataArray[index].inventory[inventoryIndex].type = newType
+    func editStock(at index: Int, inventoryIndex: Int, newStock: Item.Stock) {
+        dataArray[index].inventory[inventoryIndex] = newStock
     }
     
     func deleteStock(at index: Int, inventoryIndex: Int) {
