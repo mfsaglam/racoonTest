@@ -64,9 +64,9 @@ class InventoryViewController: UIViewController {
     func configureAddStockVC(inventoryIndex: Int? = nil, selectedIndex: Int) -> UIViewController {
         let addStockVC = storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
             if inventoryIndex != nil {
-                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, inventoryIndex: inventoryIndex, selectedIndex: selectedIndex)
+                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, inventoryIndex: inventoryIndex, selectedIndex: selectedIndex, delegate: self)
             } else {
-                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, selectedIndex: selectedIndex)
+                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, selectedIndex: selectedIndex, delegate: self)
             }
         }
         let navigationC = UINavigationController(rootViewController: addStockVC!)
@@ -103,7 +103,7 @@ extension InventoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InventoryCell", for: indexPath)
         let inventory = selectedItem.inventory[indexPath.row]
-        cell.textLabel?.text = "\(inventory.amount)"
+        cell.textLabel?.text = "\(inventory.amount.clean)"
         cell.detailTextLabel?.text = "\(inventory.type)"
         return cell
     }

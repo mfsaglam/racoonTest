@@ -61,10 +61,12 @@ class ItemManager {
     
     func updateInventory(at index: Int, inventory: [Item.Stock]) {
         dataArray[index].inventory = inventory
+        print("inventory \(dataArray[index].inventory) added to item \(dataArray[index].name)")
     }
     
     func addStock(at index: Int, newStock: Item.Stock) {
         dataArray[index].inventory.append(newStock)
+        print("inventory \(dataArray[index].inventory) added to item \(dataArray[index].name)")
     }
     
     func resetInventory() {

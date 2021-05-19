@@ -28,9 +28,7 @@ protocol ItemDelegate {
 }
 
 extension ItemDelegate {
-    
-    //TODO: - I gave default implementations but these functions are still required by the class who conforms them. Why?
-    
+        
     var manager: ItemManager {
         ItemManager.shared
     }

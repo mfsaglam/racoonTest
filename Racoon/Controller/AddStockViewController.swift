@@ -14,10 +14,11 @@ class AddStockViewController: UITableViewController {
     var inventoryIndex: Int?
     var selectedIndex: Int
     
-    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int? = nil, selectedIndex: Int) {
+    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int? = nil, selectedIndex: Int, delegate: ItemDelegate) {
         self.isEditingStock = isEditingStock
         self.inventoryIndex = inventoryIndex
         self.selectedIndex = selectedIndex
+        self.delegate = delegate
         super.init(coder: coder)
     }
     
@@ -71,7 +72,6 @@ class AddStockViewController: UITableViewController {
 }
 
 // MARK: - UITableViewDelegate
-
 extension AddStockViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
