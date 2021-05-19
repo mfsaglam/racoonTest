@@ -117,7 +117,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
             item = items[indexPath.row]
         }
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "\(item.totalStock) \(item.unit)"
+        cell.detailTextLabel?.text = "\(item.totalStock.clean) \(item.unit)"
         return cell
     }
     

@@ -18,7 +18,7 @@ class ItemManager {
     static let shared = ItemManager.init()
     private init() { }
     
-    private (set) var dataArray: [Item] = [Item(name: "1", packageQuantity: 1, unit: .kg),
+    private (set) var dataArray: [Item] = [Item(name: "1", packageQuantity: 1, unit: .kg, inventory: [Item.Stock(amount: 23.44, type: .package)]),
                                            Item(name: "2", packageQuantity: 2, unit: .kg),
                                            Item(name: "3", packageQuantity: 3, unit: .piece),
     ] {
