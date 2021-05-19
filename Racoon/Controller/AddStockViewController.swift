@@ -9,21 +9,25 @@ import UIKit
 
 class AddStockViewController: UITableViewController {
     
-    var delegate: ItemDelegate?
+    var delegate: ItemDelegate
     var isEditingStock: Bool
-    var inventoryIndex: Int?
-    var selectedIndex: Int
+    var inventoryIndex: Int
+    var stockIndex: Int
+    var navigationTitle: String {
+        isEditingStock ? "Edit Stock" : "Add Stock"
+    }
     
-    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int? = nil, selectedIndex: Int, delegate: ItemDelegate) {
+//    MARK: - Inits of AddStockViewController
+    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int, stockIndex: Int, delegate: ItemDelegate) {
         self.isEditingStock = isEditingStock
         self.inventoryIndex = inventoryIndex
-        self.selectedIndex = selectedIndex
+        self.stockIndex = stockIndex
         self.delegate = delegate
         super.init(coder: coder)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("You must create this viewController with these properties: isEditingStock, inventoryIndex and selectedIndex")
+    required init(coder: NSCoder) {
+        fatalError("")
     }
     
     @IBOutlet weak var unitSegment: UISegmentedControl!
@@ -35,10 +39,7 @@ class AddStockViewController: UITableViewController {
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
         self.navigationItem.rightBarButtonItem = saveButton
         self.navigationItem.leftBarButtonItem = cancelButton
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        self.navigationItem.title = navigationTitle
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,15 +60,15 @@ class AddStockViewController: UITableViewController {
             }
             let newStock = Item.Stock(amount: amount, type: unit)
             if self.isEditingStock {
-                self.delegate?.item(editStockAt: self.selectedIndex, inventoryIndex: self.inventoryIndex!, newStock: newStock)
+                self.delegate.item(editStockAt: self.inventoryIndex, stockIndex: self.stockIndex, newStock: newStock)
             } else {
-                self.delegate?.item(addStockAt: self.selectedIndex, newStock: newStock)
+                self.delegate.item(addStockAt: self.inventoryIndex, newStock: newStock)
             }
         }
     }
     
     @objc func cancelButtonTapped() {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

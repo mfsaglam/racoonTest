@@ -21,7 +21,7 @@ class InventoryViewController: UIViewController {
     
     var selectedIndex: Int
     var isEditingStock: Bool = false
-    var selectedStockIndex = 0
+    //var stockIndex = 0
     var delegate: ItemDelegate?
     
     init?(coder: NSCoder, selectedItem: Item, selectedIndex: Int) {
@@ -57,39 +57,29 @@ class InventoryViewController: UIViewController {
     
     @IBAction func addButtonPressed(_ sender: Any) {
         isEditingStock = false
-        self.showDetailViewController(configureAddStockVC(selectedIndex: selectedIndex), sender: self)
-        detailtemTableView.reloadData()
-    }
-    
-    func configureAddStockVC(inventoryIndex: Int? = nil, selectedIndex: Int) -> UIViewController {
-        let addStockVC = storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
-            if inventoryIndex != nil {
-                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, inventoryIndex: inventoryIndex, selectedIndex: selectedIndex, delegate: self)
-            } else {
-                return AddStockViewController(coder: coder, isEditingStock: self.isEditingStock, selectedIndex: selectedIndex, delegate: self)
-            }
-        }
-        let navigationC = UINavigationController(rootViewController: addStockVC!)
-        addStockVC!.navigationItem.title = self.isEditingStock ? "Edit Stock" : "Add Stock"
-        return navigationC
     }
 }
 
 //MARK: - UITableViewDelegate
 extension InventoryViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.isEditingStock = true
-        self.selectedStockIndex = indexPath.row
-        self.showDetailViewController(configureAddStockVC(selectedIndex: selectedIndex), sender: self)
-    }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //MARK: - Delete Swipe
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            self.manager.deleteStock(at: self.selectedIndex, inventoryIndex: indexPath.row)
+            self.manager.deleteStock(at: self.selectedIndex, stockIndex: indexPath.row)
             self.detailtemTableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        let actions = UISwipeActionsConfiguration(actions: [delete])
+        //MARK: - Edit Swipe
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+            self.isEditingStock = true
+            //init addstockvc
+            let editStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
+                AddStockViewController(coder: coder, isEditingStock: true, inventoryIndex: self.selectedIndex, stockIndex: indexPath.row, delegate: self)
+            }
+            //TODO: - show editStockVC
+            self.navigationController?.pushViewController(editStockVC!, animated: true)
+        }
+        let actions = UISwipeActionsConfiguration(actions: [delete, edit])
         return actions
     }
 }

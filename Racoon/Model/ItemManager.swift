@@ -51,12 +51,12 @@ class ItemManager {
         dataArray[index].unit = unit
     }
     
-    func editStock(at index: Int, inventoryIndex: Int, newStock: Item.Stock) {
-        dataArray[index].inventory[inventoryIndex] = newStock
+    func editStock(at index: Int, stockIndex: Int, newStock: Item.Stock) {
+        dataArray[index].inventory[stockIndex] = newStock
     }
     
-    func deleteStock(at index: Int, inventoryIndex: Int) {
-        dataArray[index].inventory.remove(at: inventoryIndex)
+    func deleteStock(at index: Int, stockIndex: Int) {
+        dataArray[index].inventory.remove(at: stockIndex)
     }
     
     func updateInventory(at index: Int, inventory: [Item.Stock]) {
@@ -70,7 +70,6 @@ class ItemManager {
     }
     
     func resetInventory() {
-        //reset the inventory here
         for index in 0..<dataArray.count {
             dataArray[index].inventory = []
         }
