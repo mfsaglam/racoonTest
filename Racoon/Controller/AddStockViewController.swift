@@ -12,7 +12,7 @@ class AddStockViewController: UITableViewController {
     var delegate: ItemDelegate
     var isEditingStock: Bool
     var inventoryIndex: Int
-    var stockIndex: Int
+    var stockIndex: Int?
     var navigationTitle: String {
         isEditingStock ? "Edit Stock" : "Add Stock"
     }
@@ -22,6 +22,13 @@ class AddStockViewController: UITableViewController {
         self.isEditingStock = isEditingStock
         self.inventoryIndex = inventoryIndex
         self.stockIndex = stockIndex
+        self.delegate = delegate
+        super.init(coder: coder)
+    }
+    
+    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int, delegate: ItemDelegate) {
+        self.isEditingStock = isEditingStock
+        self.inventoryIndex = inventoryIndex
         self.delegate = delegate
         super.init(coder: coder)
     }
@@ -50,7 +57,7 @@ class AddStockViewController: UITableViewController {
     //MARK: - Selectors
     @objc func saveButtonTapped() {
         self.dismiss(animated: true) {
-            guard let amount = Float(self.amountTextField.text ?? "\(0)") else { return }
+            guard let amount = Float(self.amountTextField.text ?? "") else { return }
             var unit: Item.StockType {
                 switch self.unitSegment.selectedSegmentIndex {
                 case 0: return .package
@@ -60,7 +67,7 @@ class AddStockViewController: UITableViewController {
             }
             let newStock = Item.Stock(amount: amount, type: unit)
             if self.isEditingStock {
-                self.delegate.item(editStockAt: self.inventoryIndex, stockIndex: self.stockIndex, newStock: newStock)
+                self.delegate.item(editStockAt: self.inventoryIndex, stockIndex: self.stockIndex!, newStock: newStock)
             } else {
                 self.delegate.item(addStockAt: self.inventoryIndex, newStock: newStock)
             }
@@ -68,7 +75,7 @@ class AddStockViewController: UITableViewController {
     }
     
     @objc func cancelButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 

@@ -57,6 +57,12 @@ class InventoryViewController: UIViewController {
     
     @IBAction func addButtonPressed(_ sender: Any) {
         isEditingStock = false
+        //init addstockvc
+        let addStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
+            AddStockViewController(coder: coder, isEditingStock: false, inventoryIndex: self.selectedIndex, delegate: self)
+        }
+        let navigationVC = UINavigationController(rootViewController: addStockVC!)
+        self.navigationController?.present(navigationVC, animated: true, completion: nil)
     }
 }
 
@@ -76,8 +82,9 @@ extension InventoryViewController: UITableViewDelegate {
             let editStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
                 AddStockViewController(coder: coder, isEditingStock: true, inventoryIndex: self.selectedIndex, stockIndex: indexPath.row, delegate: self)
             }
+            let navigationVC = UINavigationController(rootViewController: editStockVC!)
             //TODO: - show editStockVC
-            self.navigationController?.pushViewController(editStockVC!, animated: true)
+            self.navigationController?.present(navigationVC, animated: true, completion: nil)
         }
         let actions = UISwipeActionsConfiguration(actions: [delete, edit])
         return actions
