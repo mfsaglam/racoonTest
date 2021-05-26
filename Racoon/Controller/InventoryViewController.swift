@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class InventoryViewController: UIViewController {
     
@@ -111,7 +112,7 @@ extension InventoryViewController: ItemDelegate { }
 
 //MARK: - ItemManagerObserver
 extension InventoryViewController: ItemManagerObserver {
-    func didUpdateDataArray(to dataArray: [Item]) {
+    func didUpdateDataArray(to dataArray: Results<Item>) {
         selectedItem = dataArray[selectedIndex]
     }
 }

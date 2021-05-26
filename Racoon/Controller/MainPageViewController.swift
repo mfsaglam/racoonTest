@@ -6,17 +6,20 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainPageViewController: UIViewController {
     
     var manager = ItemManager.shared
-    var items: [Item] {
+    var items: Results<Item> {
         get {
             manager.getData()
         }
     }
-    var filteredItems: [Item] = [] {
-        didSet {
+    var filteredItems: Results<Item> {
+        get {
+           return items
+        } set {
             DispatchQueue.main.async {
                 self.itemsTableView.reloadData()
             }
@@ -86,16 +89,16 @@ class MainPageViewController: UIViewController {
     }
     
     func filterContentForSearchText(_ searchText: String, category: Item.Category? = nil) {
-        filteredItems = items.filter { (item: Item) -> Bool in
-            let doesCategoryMatch = category == .all || item.category == category
-            
-            if isSearchBarEmpty {
-                return doesCategoryMatch
-            } else {
-                return doesCategoryMatch && item.name.lowercased()
-                    .contains(searchText.lowercased())
-            }
-        }
+//        filteredItems = items.filter { (item: Item) -> Bool in
+//            let doesCategoryMatch = category == .all || item.category == category
+//
+//            if isSearchBarEmpty {
+//                return doesCategoryMatch
+//            } else {
+//                return doesCategoryMatch && item.name.lowercased()
+//                    .contains(searchText.lowercased())
+//            }
+//        }
     }
 }
 
@@ -179,7 +182,7 @@ extension MainPageViewController: ItemDelegate {
 
 //MARK: - ItemManagerObserver
 extension MainPageViewController: ItemManagerObserver {
-    func didUpdateDataArray(to dataArray: [Item]) {
+    func didUpdateDataArray(to dataArray: Results<Item>) {
         filteredItems = dataArray
     }
 }

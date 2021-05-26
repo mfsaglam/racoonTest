@@ -6,36 +6,42 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct Item {
+class Item: Object {
     
-    var name: String
-    var packageQuantity: Float
-    var unit: Item.Unit
-    var inventory: [Stock] = []
+    dynamic var name: String
+    dynamic var packageQuantity: Float
+    dynamic var unit: Item.Unit
+    dynamic var inventory: [Stock] = []
     
-    struct Stock {
-        var amount: Float
-        var type: Item.StockType
+    class Stock: Object {
+        dynamic var amount: Float
+        dynamic var type: Item.StockType
+        
+        init(amount: Float, type: Item.StockType) {
+            self.amount = amount
+            self.type = type
+        }
     }
     
-    enum StockType {
+    @objc enum StockType: Int, RealmEnum {
         case package, piece
     }
     
-    enum Unit {
+    @objc enum Unit: Int, RealmEnum {
         case kg, piece
     }
     
-    enum Category {
+    @objc enum Category: Int, RealmEnum {
         case all, zero, counted
     }
     
-    var category: Item.Category {
+    dynamic var category: Item.Category {
         self.inventory.count == 0 ? .zero : .counted
     }
     
-    var totalStock: Float {
+    dynamic var totalStock: Float {
         var totalStock: Float = 0
         for stock in inventory {
             if stock.type == .package {
@@ -46,7 +52,18 @@ struct Item {
         }
         return totalStock
     }
+    
+//MARK: - İnitializers
+    
+    init(name:String , packageQuantity: Float , unit: Item.Unit, inventory: [Item.Stock] = []) {
+        self.name = name
+        self.packageQuantity = packageQuantity
+        self.unit = unit
+        self.inventory = inventory
+    }
 }
+
+//MARK: - Extensions
 
 extension Item.Category: CaseIterable { }
 
@@ -69,9 +86,6 @@ extension Item.Category: RawRepresentable {
       case .counted: return "Counted"
       }
     }
-    
-    
 }
-
 
 

@@ -6,26 +6,38 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol ItemManagerObserver {
-    func didUpdateDataArray(to dataArray: [Item])
+    func didUpdateDataArray(to dataArray: Results<Item>)
 }
 
 class ItemManager {
+    
+    let realm = try! Realm()
     
     var observers = [ItemManagerObserver]()
     
     static let shared = ItemManager.init()
     private init() { }
     
-    private (set) var dataArray: [Item] = [Item(name: "1", packageQuantity: 1, unit: .kg, inventory: [Item.Stock(amount: 23.44, type: .package)]),
-                                           Item(name: "2", packageQuantity: 2, unit: .kg),
-                                           Item(name: "3", packageQuantity: 3, unit: .piece),
-    ] {
-        didSet {
+    private (set) var dataArray: Results<Item> {
+        get {
+            return realm.objects(Item.self)
+        } set {
             observers.forEach { observer in
-                observer.didUpdateDataArray(to: dataArray)
+                observer.didUpdateDataArray(to: newValue)
             }
+        }
+    }
+    
+    private func save(item: Item) {
+        do {
+            try realm.write {
+                realm.add(item)
+            }
+        } catch {
+            fatalError("Error saving objects to realm \(error)")
         }
     }
     
@@ -33,16 +45,17 @@ class ItemManager {
         observers.append(observer)
     }
     
-    func getData() -> [Item] {
+    func getData() -> Results<Item> {
+        dataArray = realm.objects(Item.self)
         return dataArray
     }
     
     func deleteItem(at index: Int) {
-        dataArray.remove(at: index)
+        
     }
     
     func addItem(_ item: Item) {
-        dataArray.append(item)
+        save(item: item)
     }
     
     func editItem(at index: Int, name: String, packageQuantity: Float, unit: Item.Unit) {
