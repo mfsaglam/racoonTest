@@ -64,7 +64,7 @@ class ItemManager {
         dataArray[index].unit = unit
     }
     
-    func editStock(at index: Int, stockIndex: Int, newStock: Item.Stock) {
+    func editStock(at index: Int, stockIndex: Int, newStock: Stock) {
         dataArray[index].inventory[stockIndex] = newStock
     }
     
@@ -72,19 +72,19 @@ class ItemManager {
         dataArray[index].inventory.remove(at: stockIndex)
     }
     
-    func updateInventory(at index: Int, inventory: [Item.Stock]) {
+    func updateInventory(at index: Int, inventory: List<Stock>) {
         dataArray[index].inventory = inventory
         print("inventory \(dataArray[index].inventory) added to item \(dataArray[index].name)")
     }
     
-    func addStock(at index: Int, newStock: Item.Stock) {
+    func addStock(at index: Int, newStock: Stock) {
         dataArray[index].inventory.append(newStock)
         print("inventory \(dataArray[index].inventory) added to item \(dataArray[index].name)")
     }
     
     func resetInventory() {
         for index in 0..<dataArray.count {
-            dataArray[index].inventory = []
+            dataArray[index].inventory = List<Stock>()
         }
     }
 }

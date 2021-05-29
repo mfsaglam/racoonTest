@@ -65,7 +65,7 @@ class AddStockViewController: UITableViewController {
                 default: return .package
                 }
             }
-            let newStock = Item.Stock(amount: amount, type: unit)
+            let newStock = Stock(amount: amount, type: unit)
             if self.isEditingStock {
                 self.delegate.item(editStockAt: self.inventoryIndex, stockIndex: self.stockIndex!, newStock: newStock)
             } else {
