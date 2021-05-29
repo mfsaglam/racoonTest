@@ -10,10 +10,10 @@ import RealmSwift
 
 class Item: Object {
     
-    @objc dynamic var name: String
-    @objc dynamic var packageQuantity: Float
-    @objc dynamic var unit: Item.Unit
-    var inventory: List<Stock>
+    @objc dynamic var name: String = ""
+    @objc dynamic var packageQuantity: Float = 0.0
+    @objc dynamic var unit: Item.Unit = .kg
+    var inventory: List<Stock> = List<Stock>()
     
     @objc enum StockType: Int, RealmEnum {
         case package, piece
@@ -45,7 +45,8 @@ class Item: Object {
     
 //MARK: - Initializers
     
-    init(name:String , packageQuantity: Float , unit: Item.Unit, inventory: List<Stock> = List<Stock>()) {
+    convenience init(name:String , packageQuantity: Float , unit: Item.Unit, inventory: List<Stock> = List<Stock>()) {
+        self.init()
         self.name = name
         self.packageQuantity = packageQuantity
         self.unit = unit
