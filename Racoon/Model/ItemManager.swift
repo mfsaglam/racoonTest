@@ -51,7 +51,14 @@ class ItemManager {
     }
     
     func deleteItem(at index: Int) {
-        
+        let item = dataArray[index]
+        do {
+            try realm.write {
+                realm.delete(item)
+            }
+        } catch {
+            print("error deleting object from realm \(error)")
+        }
     }
     
     func addItem(_ item: Item) {
