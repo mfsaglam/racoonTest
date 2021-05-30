@@ -11,11 +11,8 @@ import RealmSwift
 class MainPageViewController: UIViewController {
     
     var manager = ItemManager.shared
-    var items: Results<Item> {
-        get {
-            manager.getData()
-        }
-    }
+    lazy var items: Results<Item> = manager.getData()
+
     var filteredItems: Results<Item> {
         get {
            return items
