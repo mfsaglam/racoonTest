@@ -45,6 +45,7 @@ class ItemManager {
         do {
             try realm.write {
                 realm.delete(item)
+                dataArray = getData()
             }
         } catch {
             print("error deleting object from realm \(error)")
@@ -55,6 +56,7 @@ class ItemManager {
         do {
             try realm.write {
                 realm.add(item)
+                dataArray = getData()
             }
         } catch {
             fatalError("Error saving objects to realm \(error)")
@@ -67,6 +69,7 @@ class ItemManager {
                 dataArray[index].name = name
                 dataArray[index].packageQuantity = packageQuantity
                 dataArray[index].unit = unit
+                dataArray = getData()
             }
         } catch {
             print("error editing onject in realm \(error)")
@@ -77,6 +80,7 @@ class ItemManager {
         do {
             try realm.write {
                 dataArray[index].inventory[stockIndex] = newStock
+                dataArray = getData()
             }
         } catch {
             print("error editing stock \(error)")
@@ -87,6 +91,7 @@ class ItemManager {
         do {
             try realm.write {
                 dataArray[index].inventory.remove(at: stockIndex)
+                dataArray = getData()
             }
         } catch {
             print("error deleting stock \(error)")
@@ -97,6 +102,7 @@ class ItemManager {
         do {
             try realm.write {
                 dataArray[index].inventory = inventory
+                dataArray = getData()
             }
         } catch {
             print("Error updaing inventory \(error)")
@@ -107,6 +113,7 @@ class ItemManager {
         do {
             try realm.write {
                 dataArray[index].inventory.append(newStock)
+                dataArray = getData()
             }
         } catch {
             print("error adding stock to object in realm \(error)")
@@ -119,6 +126,7 @@ class ItemManager {
             try realm.write {
                 for index in 0..<dataArray.count {
                     dataArray[index].inventory = List<Stock>()
+                    dataArray = getData()
                 }
             }
         } catch {

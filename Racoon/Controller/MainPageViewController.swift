@@ -23,6 +23,8 @@ class MainPageViewController: UIViewController {
         }
     }
     
+    //MARK: Searchbar Boolen Properties
+    
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -41,7 +43,6 @@ class MainPageViewController: UIViewController {
     }()
     
     @IBOutlet weak var itemsTableView: UITableView!
-    @IBOutlet weak var segmentedSwitch: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,12 +171,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 //MARK: - ItemDelegate
-extension MainPageViewController: ItemDelegate {
-    func item(addItem item: Item) {
-        manager.addItem(item)
-        itemsTableView.reloadData()
-    }
-}
+extension MainPageViewController: ItemDelegate { }
 
 //MARK: - ItemManagerObserver
 extension MainPageViewController: ItemManagerObserver {

@@ -24,7 +24,6 @@ class CreateItemTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         nameTextField.becomeFirstResponder()
-        navigationItem.backButtonTitle = " "
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {

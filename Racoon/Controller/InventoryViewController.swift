@@ -102,7 +102,14 @@ extension InventoryViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InventoryCell", for: indexPath)
         let inventory = selectedItem.inventory[indexPath.row]
         cell.textLabel?.text = "\(inventory.amount.clean)"
-        cell.detailTextLabel?.text = "\(inventory.type)"
+        var detailString: String {
+            switch inventory.type.rawValue {
+            case 0: return "Package"
+            case 1: return "Piece"
+            default: return ""
+            }
+        }
+        cell.detailTextLabel?.text = "\(detailString)"
         return cell
     }
 }
