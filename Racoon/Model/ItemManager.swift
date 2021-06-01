@@ -31,16 +31,6 @@ class ItemManager {
         }
     }
     
-    private func save(item: Item) {
-        do {
-            try realm.write {
-                realm.add(item)
-            }
-        } catch {
-            fatalError("Error saving objects to realm \(error)")
-        }
-    }
-    
     func addObserver(observer: ItemManagerObserver) {
         observers.append(observer)
     }
@@ -62,36 +52,78 @@ class ItemManager {
     }
     
     func addItem(_ item: Item) {
-        save(item: item)
+        do {
+            try realm.write {
+                realm.add(item)
+            }
+        } catch {
+            fatalError("Error saving objects to realm \(error)")
+        }
     }
     
     func editItem(at index: Int, name: String, packageQuantity: Float, unit: Item.Unit) {
-        dataArray[index].name = name
-        dataArray[index].packageQuantity = packageQuantity
-        dataArray[index].unit = unit
+        do {
+            try realm.write {
+                dataArray[index].name = name
+                dataArray[index].packageQuantity = packageQuantity
+                dataArray[index].unit = unit
+            }
+        } catch {
+            print("error editing onject in realm \(error)")
+        }
     }
     
     func editStock(at index: Int, stockIndex: Int, newStock: Stock) {
-        dataArray[index].inventory[stockIndex] = newStock
+        do {
+            try realm.write {
+                dataArray[index].inventory[stockIndex] = newStock
+            }
+        } catch {
+            print("error editing stock \(error)")
+        }
     }
     
     func deleteStock(at index: Int, stockIndex: Int) {
-        dataArray[index].inventory.remove(at: stockIndex)
+        do {
+            try realm.write {
+                dataArray[index].inventory.remove(at: stockIndex)
+            }
+        } catch {
+            print("error deleting stock \(error)")
+        }
     }
     
     func updateInventory(at index: Int, inventory: List<Stock>) {
-        dataArray[index].inventory = inventory
-        print("inventory \(dataArray[index].inventory) added to item \(dataArray[index].name)")
+        do {
+            try realm.write {
+                dataArray[index].inventory = inventory
+            }
+        } catch {
+            print("Error updaing inventory \(error)")
+        }
     }
     
     func addStock(at index: Int, newStock: Stock) {
-        dataArray[index].inventory.append(newStock)
+        do {
+            try realm.write {
+                dataArray[index].inventory.append(newStock)
+            }
+        } catch {
+            print("error adding stock to object in realm \(error)")
+        }
         print("inventory \(dataArray[index].inventory) added to item \(dataArray[index].name)")
     }
     
     func resetInventory() {
-        for index in 0..<dataArray.count {
-            dataArray[index].inventory = List<Stock>()
+        do {
+            try realm.write {
+                for index in 0..<dataArray.count {
+                    dataArray[index].inventory = List<Stock>()
+                }
+            }
+        } catch {
+            print("Error resetting inventories \(error)")
         }
+        
     }
 }
