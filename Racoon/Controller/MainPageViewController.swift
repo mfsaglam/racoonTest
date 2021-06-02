@@ -87,6 +87,7 @@ class MainPageViewController: UIViewController {
     }
     
     func filterContentForSearchText(_ searchText: String, category: Item.Category? = nil) {
+        filteredItems = items.filter("name CONTAINS[cd] %@", searchText).sorted(byKeyPath: "name", ascending: true)
 //        filteredItems = items.filter { (item: Item) -> Bool in
 //            let doesCategoryMatch = category == .all || item.category == category
 //
@@ -187,6 +188,7 @@ extension MainPageViewController: UISearchResultsUpdating {
         let searchBar = searchController.searchBar
           let category = Item.Category(rawValue: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
           filterContentForSearchText(searchBar.text!, category: category)
+        itemsTableView.reloadData()
     }
 }
 
@@ -195,6 +197,7 @@ extension MainPageViewController: UISearchBarDelegate {
       selectedScopeButtonIndexDidChange selectedScope: Int) {
     let category = Item.Category(rawValue: searchBar.scopeButtonTitles![selectedScope])
     filterContentForSearchText(searchBar.text!, category: category)
+    itemsTableView.reloadData()
   }
 }
 
