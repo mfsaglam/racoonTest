@@ -8,19 +8,25 @@
 import UIKit
 import RealmSwift
 
+extension Results {
+    var asList: List<Element> {
+        return self.filter { _ in true }
+    }
+}
+
 class MainPageViewController: UIViewController {
     
     var manager = ItemManager.shared
     lazy var items: Results<Item> = manager.getData()
-
-    var filteredItems: Results<Item> {
-        get {
-           return items
-        } set {
+    lazy var resultItems: List<Item> = self.items.asList {
+        didSet {
             DispatchQueue.main.async {
                 self.itemsTableView.reloadData()
             }
         }
+    }
+    var filteredItems: List<Item> {
+        return self.isFiltering ? self.resultItems : self.items.asList
     }
     
     //MARK: Searchbar Boolen Properties
@@ -87,16 +93,15 @@ class MainPageViewController: UIViewController {
     }
     
     func filterContentForSearchText(_ searchText: String, category: Item.Category? = nil) {
-//        filteredItems = items.filter { (item: Item) -> Bool in
-//            let doesCategoryMatch = category == .all || item.category == category
-//
-//            if isSearchBarEmpty {
-//                return doesCategoryMatch
-//            } else {
-//                return doesCategoryMatch && item.name.lowercased().contains(searchText.lowercased())
-////                return doesCategoryMatch && items.filter("name CONTAINS[cd] %@", searchText).sorted(byKeyPath: "name", ascending: true)
-//            }
-//        }
+        self.resultItems = self.items.filter { (item: Item) -> Bool in
+            let doesCategoryMatch = category == .all || item.category == category
+
+            if isSearchBarEmpty {
+                return doesCategoryMatch
+            } else {
+                return doesCategoryMatch && item.name.lowercased().contains(searchText.lowercased())
+            }
+        }
     }
 }
 
@@ -111,12 +116,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
-        let item: Item
-        if isFiltering {
-            item = filteredItems[indexPath.row]
-        } else {
-            item = items[indexPath.row]
-        }
+        let item = filteredItems[indexPath.row]
         cell.textLabel?.text = item.name
         var unit: String {
             switch item.unit {
@@ -129,12 +129,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item: Item
-        if isFiltering {
-            item = filteredItems[indexPath.row]
-        } else {
-            item = items[indexPath.row]
-        }
+        let item = filteredItems[indexPath.row]
         guard let countItemVC = self.storyboard?.instantiateViewController(identifier: "CountItemViewControllerID", creator: { coder in
             let inventoryVC = InventoryViewController(coder: coder, selectedItem: item, selectedIndex: indexPath.row)
             inventoryVC?.delegate = self
@@ -183,7 +178,7 @@ extension MainPageViewController: ItemDelegate { }
 //MARK: - ItemManagerObserver
 extension MainPageViewController: ItemManagerObserver {
     func didUpdateDataArray(to dataArray: Results<Item>) {
-        filteredItems = dataArray
+        resultItems = dataArray.asList
     }
 }
 
