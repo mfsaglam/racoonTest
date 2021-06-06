@@ -125,7 +125,7 @@ class ItemManager {
         do {
             try realm.write {
                 for index in 0..<dataArray.count {
-                    dataArray[index].inventory = List<Stock>()
+                    dataArray[index].inventory.removeAll()
                     dataArray = getData()
                 }
             }

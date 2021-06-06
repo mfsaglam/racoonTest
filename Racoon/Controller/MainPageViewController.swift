@@ -87,15 +87,14 @@ class MainPageViewController: UIViewController {
     }
     
     func filterContentForSearchText(_ searchText: String, category: Item.Category? = nil) {
-        filteredItems = items.filter("name CONTAINS[cd] %@", searchText).sorted(byKeyPath: "name", ascending: true)
 //        filteredItems = items.filter { (item: Item) -> Bool in
 //            let doesCategoryMatch = category == .all || item.category == category
 //
 //            if isSearchBarEmpty {
 //                return doesCategoryMatch
 //            } else {
-//                return doesCategoryMatch && item.name.lowercased()
-//                    .contains(searchText.lowercased())
+//                return doesCategoryMatch && item.name.lowercased().contains(searchText.lowercased())
+////                return doesCategoryMatch && items.filter("name CONTAINS[cd] %@", searchText).sorted(byKeyPath: "name", ascending: true)
 //            }
 //        }
     }
@@ -119,7 +118,13 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
             item = items[indexPath.row]
         }
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "\(item.totalStock.clean) \(item.unit)"
+        var unit: String {
+            switch item.unit {
+            case .kg: return "Grams"
+            case .piece: return "Pieces"
+            }
+        }
+        cell.detailTextLabel?.text = "\(item.totalStock.clean) \(unit)"
         return cell
     }
     
@@ -164,6 +169,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
             self.showDetailViewController(navigationC, sender: self)
             complete(true)
         }
+        //MARK: - Reset Action
         delete.image = UIImage(systemName: "xmark")
         edit.image = UIImage(systemName: "square.and.pencil")
         edit.backgroundColor = .purple

@@ -13,22 +13,31 @@ class AddStockViewController: UITableViewController {
     var isEditingStock: Bool
     var inventoryIndex: Int
     var stockIndex: Int?
+    var itemUnitType: Item.Unit
+    var segmentTitle: String {
+        switch itemUnitType {
+        case .kg: return "Grams"
+        case .piece: return "Piece"
+        }
+    }
     var navigationTitle: String {
         isEditingStock ? "Edit Stock" : "Add Stock"
     }
     
 //    MARK: - Inits of AddStockViewController
-    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int, stockIndex: Int, delegate: ItemDelegate) {
+    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int, stockIndex: Int, itemUnitType: Item.Unit, delegate: ItemDelegate) {
         self.isEditingStock = isEditingStock
         self.inventoryIndex = inventoryIndex
         self.stockIndex = stockIndex
         self.delegate = delegate
+        self.itemUnitType = itemUnitType
         super.init(coder: coder)
     }
     
-    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int, delegate: ItemDelegate) {
+    init?(coder: NSCoder, isEditingStock: Bool, inventoryIndex: Int, itemUnitType: Item.Unit, delegate: ItemDelegate) {
         self.isEditingStock = isEditingStock
         self.inventoryIndex = inventoryIndex
+        self.itemUnitType = itemUnitType
         self.delegate = delegate
         super.init(coder: coder)
     }
@@ -47,6 +56,7 @@ class AddStockViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = saveButton
         self.navigationItem.leftBarButtonItem = cancelButton
         self.navigationItem.title = navigationTitle
+        self.unitSegment.setTitle("\(segmentTitle)", forSegmentAt: 1)
     }
     
     override func viewDidAppear(_ animated: Bool) {

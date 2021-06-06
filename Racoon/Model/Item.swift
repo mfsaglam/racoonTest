@@ -79,23 +79,4 @@ extension Item.Category: RawRepresentable {
     }
 }
 
-//extension Item.StockType: RawRepresentable {
-//    typealias RawValue = String
-//
-//    init?(rawValue: RawValue) {
-//        switch rawValue {
-//        case "Package" : self = .package
-//        case "Piece" : self = .piece
-//        default: return nil
-//        }
-//    }
-//
-//    var rawValue: RawValue {
-//        switch self {
-//        case .package: return "Package"
-//        case .piece: return "Piece"
-//        }
-//    }
-//}
-
 

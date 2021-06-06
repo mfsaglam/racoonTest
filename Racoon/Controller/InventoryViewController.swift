@@ -60,7 +60,7 @@ class InventoryViewController: UIViewController {
         isEditingStock = false
         //init addstockvc
         let addStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
-            AddStockViewController(coder: coder, isEditingStock: false, inventoryIndex: self.selectedIndex, delegate: self)
+            AddStockViewController(coder: coder, isEditingStock: false, inventoryIndex: self.selectedIndex, itemUnitType: self.selectedItem.unit, delegate: self)
         }
         let navigationVC = UINavigationController(rootViewController: addStockVC!)
         self.navigationController?.present(navigationVC, animated: true, completion: nil)
@@ -81,7 +81,7 @@ extension InventoryViewController: UITableViewDelegate {
             self.isEditingStock = true
             //init addstockvc
             let editStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
-                AddStockViewController(coder: coder, isEditingStock: true, inventoryIndex: self.selectedIndex, stockIndex: indexPath.row, delegate: self)
+                AddStockViewController(coder: coder, isEditingStock: true, inventoryIndex: self.selectedIndex, stockIndex: indexPath.row, itemUnitType: self.selectedItem.unit, delegate: self)
             }
             let navigationVC = UINavigationController(rootViewController: editStockVC!)
             //TODO: - show editStockVC
@@ -103,11 +103,20 @@ extension InventoryViewController: UITableViewDataSource {
         let inventory = selectedItem.inventory[indexPath.row]
         cell.textLabel?.text = "\(inventory.amount.clean)"
         var detailString: String {
-            switch inventory.type.rawValue {
-            case 0: return "Package"
-            case 1: return "Piece"
-            default: return ""
+            if selectedItem.unit == .piece {
+                switch inventory.type.rawValue {
+                case 0: return "Package"
+                case 1: return "Piece"
+                default: return ""
+                }
+            } else {
+                switch inventory.type.rawValue {
+                case 0: return "Package"
+                case 1: return "Grams"
+                default: return ""
+                }
             }
+            
         }
         cell.detailTextLabel?.text = "\(detailString)"
         return cell
