@@ -13,9 +13,9 @@ class MainPageViewController: UIViewController {
     var manager = ItemManager.shared
     lazy var items: Results<Item> = manager.getData()
 
-    var filteredItems: Results<Item> {
+    var filteredItems: [Item] {
         get {
-           return items
+            return items.toArray()
         } set {
             DispatchQueue.main.async {
                 self.itemsTableView.reloadData()
@@ -44,14 +44,34 @@ class MainPageViewController: UIViewController {
     
     @IBOutlet weak var itemsTableView: UITableView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.hidesSearchBarWhenScrolling = true
+        
+//      MARK: - Realm Notification Token
+        manager.itemsToken = items.observe { changes in
+            guard let tableView = self.itemsTableView else { return }
+            
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let updates):
+                tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
+            case .error: break
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        manager.addObserver(observer: self)
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         //MARK: - UISearchController's parameters at viewDidLoad
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
         filterContentForSearchText("")
         searchController.searchBar.scopeButtonTitles = Item.Category.allCases.map { $0.rawValue }
@@ -87,16 +107,16 @@ class MainPageViewController: UIViewController {
     }
     
     func filterContentForSearchText(_ searchText: String, category: Item.Category? = nil) {
-//        filteredItems = items.filter { (item: Item) -> Bool in
-//            let doesCategoryMatch = category == .all || item.category == category
-//
-//            if isSearchBarEmpty {
-//                return doesCategoryMatch
-//            } else {
-//                return doesCategoryMatch && item.name.lowercased().contains(searchText.lowercased())
-////                return doesCategoryMatch && items.filter("name CONTAINS[cd] %@", searchText).sorted(byKeyPath: "name", ascending: true)
-//            }
-//        }
+        filteredItems.filter { (item: Item) -> Bool in
+            let doesCategoryMatch = category == .all || item.category == category
+
+            if isSearchBarEmpty {
+                return doesCategoryMatch
+            } else {
+                return doesCategoryMatch && item.name.lowercased().contains(searchText.lowercased())
+//                return doesCategoryMatch && items.filter("name CONTAINS[cd] %@", searchText).sorted(byKeyPath: "name", ascending: true)
+            }
+        }
     }
 }
 
@@ -145,47 +165,54 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         self.navigationController?.pushViewController(countItemVC, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //MARK: - Delete Action
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-                manager.deleteItem(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-                tableView.reloadRows(at: [indexPath], with: .right)
-            }))
-            self.present(alert, animated: true, completion: nil)
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        //MARK: - Delete Action
+//        let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, nil) in
+//            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+//                manager.deleteItem(at: indexPath.row)
+//                tableView.deleteRows(at: [indexPath], with: .automatic)
+//            }))
+//            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+//                tableView.reloadRows(at: [indexPath], with: .right)
+//            }))
+//            self.present(alert, animated: true, completion: nil)
+//        }
+//        //MARK: - Edit Action
+//        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, complete) in
+//            let selectedItem = self.filteredItems[indexPath.row]
+//            let editItemVC = self.storyboard?.instantiateViewController(identifier: "EditItemTableViewControllerID", creator: { coder in
+//                return EditItemTableViewController(coder: coder, selectedItem: selectedItem, indexPath: indexPath.row)
+//            })
+//            let navigationC = UINavigationController(rootViewController: editItemVC!)
+//            editItemVC?.delegate = self
+//            self.showDetailViewController(navigationC, sender: self)
+//            complete(true)
+//        }
+//        //MARK: - Reset Action
+//        let reset = UIContextualAction(style: .normal, title: "Reset") { action, view, complete in
+//            let selectedItem = self.filteredItems[indexPath.row]
+//            self.manager.resetInventory(for: selectedItem)
+//            self.itemsTableView.reloadRows(at: [indexPath], with: .right)
+//        }
+//        delete.image = UIImage(systemName: "xmark")
+//        edit.image = UIImage(systemName: "square.and.pencil")
+//        edit.backgroundColor = .purple
+//        reset.image = UIImage(systemName: "arrow.clockwise")
+//        reset.backgroundColor = .link
+//        return UISwipeActionsConfiguration(actions: [delete, edit, reset])
+//    }
+//  MARK: - TableView Editing Methos
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            manager.deleteItem(at: indexPath.row)
         }
-        //MARK: - Edit Action
-        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, complete) in
-            let selectedItem = self.filteredItems[indexPath.row]
-            let editItemVC = self.storyboard?.instantiateViewController(identifier: "EditItemTableViewControllerID", creator: { coder in
-                return EditItemTableViewController(coder: coder, selectedItem: selectedItem, indexPath: indexPath.row)
-            })
-            let navigationC = UINavigationController(rootViewController: editItemVC!)
-            editItemVC?.delegate = self
-            self.showDetailViewController(navigationC, sender: self)
-            complete(true)
-        }
-        //MARK: - Reset Action
-        delete.image = UIImage(systemName: "xmark")
-        edit.image = UIImage(systemName: "square.and.pencil")
-        edit.backgroundColor = .purple
-        return UISwipeActionsConfiguration(actions: [delete, edit])
     }
 }
 
 //MARK: - ItemDelegate
 extension MainPageViewController: ItemDelegate { }
-
-//MARK: - ItemManagerObserver
-extension MainPageViewController: ItemManagerObserver {
-    func didUpdateDataArray(to dataArray: Results<Item>) {
-        filteredItems = dataArray
-    }
-}
 
 //https://www.raywenderlich.com/4363809-uisearchcontroller-tutorial-getting-started
 //MARK: - UISearchResultsUpdating

@@ -43,12 +43,11 @@ class InventoryViewController: UIViewController {
         super.viewDidLoad()
         detailtemTableView.delegate = self
         detailtemTableView.dataSource = self
-        manager.addObserver(observer: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        ItemManager.shared.observers.removeAll(where: { $0 is InventoryViewController })
+        manager.itemsToken?.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -125,10 +124,3 @@ extension InventoryViewController: UITableViewDataSource {
 
 //MARK: - ItemDelegate
 extension InventoryViewController: ItemDelegate { }
-
-//MARK: - ItemManagerObserver
-extension InventoryViewController: ItemManagerObserver {
-    func didUpdateDataArray(to dataArray: Results<Item>) {
-        selectedItem = dataArray[selectedIndex]
-    }
-}

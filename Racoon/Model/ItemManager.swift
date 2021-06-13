@@ -8,31 +8,19 @@
 import Foundation
 import RealmSwift
 
-protocol ItemManagerObserver {
-    func didUpdateDataArray(to dataArray: Results<Item>)
-}
-
 class ItemManager {
     
     let realm = try! Realm()
     
-    var observers = [ItemManagerObserver]()
-    
+    var itemsToken: NotificationToken?
+
     static let shared = ItemManager.init()
     private init() { }
     
     private (set) var dataArray: Results<Item> {
         get {
             return realm.objects(Item.self)
-        } set {
-            observers.forEach { observer in
-                observer.didUpdateDataArray(to: newValue)
-            }
-        }
-    }
-    
-    func addObserver(observer: ItemManagerObserver) {
-        observers.append(observer)
+        } set { }
     }
     
     func getData() -> Results<Item> {
@@ -133,5 +121,15 @@ class ItemManager {
             print("Error resetting inventories \(error)")
         }
         
+    }
+    
+    func resetInventory(for item: Item) {
+        do {
+            try realm.write {
+                item.inventory.removeAll()
+            }
+        } catch {
+            print("Error resetting inventory for \(item): \(error)")
+        }
     }
 }
