@@ -20,8 +20,10 @@ class InventoryViewController: UIViewController {
         }
     }
     
+    var stockToken : NotificationToken?
+    
     var selectedIndex: Int
-    var isEditingStock: Bool = false
+//    var isEditingStock: Bool = false
     //var stockIndex = 0
     var delegate: ItemDelegate?
     
@@ -45,18 +47,29 @@ class InventoryViewController: UIViewController {
         detailtemTableView.dataSource = self
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        manager.itemsToken?.invalidate()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = selectedItem.name
+//      MARK: - Realm Notification Token
+        stockToken = manager.dataArray.observe { [ weak self ] changes in
+            guard let tableView = self?.detailtemTableView else { return }
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let updates):
+                tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
+            case .error: break
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stockToken?.invalidate()
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        isEditingStock = false
+//        isEditingStock = false
         //init addstockvc
         let addStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
             AddStockViewController(coder: coder, isEditingStock: false, inventoryIndex: self.selectedIndex, itemUnitType: self.selectedItem.unit, delegate: self)
@@ -69,26 +82,32 @@ class InventoryViewController: UIViewController {
 //MARK: - UITableViewDelegate
 extension InventoryViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //MARK: - Delete Swipe
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            self.manager.deleteStock(at: self.selectedIndex, stockIndex: indexPath.row)
-            self.detailtemTableView.deleteRows(at: [indexPath], with: .automatic)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            manager.deleteStock(at: selectedIndex, stockIndex: indexPath.row)
         }
-        //MARK: - Edit Swipe
-        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
-            self.isEditingStock = true
-            //init addstockvc
-            let editStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
-                AddStockViewController(coder: coder, isEditingStock: true, inventoryIndex: self.selectedIndex, stockIndex: indexPath.row, itemUnitType: self.selectedItem.unit, delegate: self)
-            }
-            let navigationVC = UINavigationController(rootViewController: editStockVC!)
-            //TODO: - show editStockVC
-            self.navigationController?.present(navigationVC, animated: true, completion: nil)
-        }
-        let actions = UISwipeActionsConfiguration(actions: [delete, edit])
-        return actions
     }
+    
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        //MARK: - Delete Swipe
+//        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+//            self.manager.deleteStock(at: self.selectedIndex, stockIndex: indexPath.row)
+////            self.detailtemTableView.deleteRows(at: [indexPath], with: .automatic)
+//        }
+//        //MARK: - Edit Swipe
+//        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+//            self.isEditingStock = true
+//            //init addstockvc
+//            let editStockVC = self.navigationController?.storyboard?.instantiateViewController(identifier: "AddStockControllerID") { coder in
+//                AddStockViewController(coder: coder, isEditingStock: true, inventoryIndex: self.selectedIndex, stockIndex: indexPath.row, itemUnitType: self.selectedItem.unit, delegate: self)
+//            }
+//            let navigationVC = UINavigationController(rootViewController: editStockVC!)
+//            //TODO: - show editStockVC
+//            self.navigationController?.present(navigationVC, animated: true, completion: nil)
+//        }
+//        let actions = UISwipeActionsConfiguration(actions: [delete, edit])
+//        return actions
+//    }
 }
 
 //MARK: - UITableViewDataSource

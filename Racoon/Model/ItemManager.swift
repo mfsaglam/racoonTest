@@ -11,8 +11,6 @@ import RealmSwift
 class ItemManager {
     
     let realm = try! Realm()
-    
-    var itemsToken: NotificationToken?
 
     static let shared = ItemManager.init()
     private init() { }

@@ -11,6 +11,7 @@ import RealmSwift
 class MainPageViewController: UIViewController {
     
     var manager = ItemManager.shared
+    var itemsToken : NotificationToken?
     lazy var items: Results<Item> = manager.getData()
 
     var filteredItems: [Item] {
@@ -51,7 +52,7 @@ class MainPageViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = true
         
 //      MARK: - Realm Notification Token
-        manager.itemsToken = items.observe { changes in
+        itemsToken = manager.dataArray.observe { changes in
             guard let tableView = self.itemsTableView else { return }
             
             switch changes {
@@ -81,6 +82,11 @@ class MainPageViewController: UIViewController {
         let resetButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleReset))
         navigationItem.rightBarButtonItem = addButton
         navigationItem.leftBarButtonItem = resetButton
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        itemsToken?.invalidate()
     }
     
 // MARK: - Selectors
@@ -206,7 +212,14 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            manager.deleteItem(at: indexPath.row)
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                self.manager.deleteItem(at: indexPath.row)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                tableView.reloadRows(at: [indexPath], with: .none)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }
